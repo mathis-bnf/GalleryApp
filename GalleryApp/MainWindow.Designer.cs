@@ -33,9 +33,9 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.bChargeDB = new System.Windows.Forms.Button();
-            this.bNewAlbum = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.bDeleteAlbum = new System.Windows.Forms.Button();
+            this.bNewAlbum = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -92,17 +92,6 @@
             this.bChargeDB.UseVisualStyleBackColor = true;
             this.bChargeDB.Click += new System.EventHandler(this.bChargeDB_Click);
             // 
-            // bNewAlbum
-            // 
-            this.bNewAlbum.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bNewAlbum.Location = new System.Drawing.Point(117, 59);
-            this.bNewAlbum.Name = "bNewAlbum";
-            this.bNewAlbum.Size = new System.Drawing.Size(140, 35);
-            this.bNewAlbum.TabIndex = 1;
-            this.bNewAlbum.Text = "New Album";
-            this.bNewAlbum.UseVisualStyleBackColor = true;
-            this.bNewAlbum.Click += new System.EventHandler(this.bNewAlbum_Click);
-            // 
             // treeView1
             // 
             this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
@@ -124,6 +113,17 @@
             this.bDeleteAlbum.Text = "Delete Album";
             this.bDeleteAlbum.UseVisualStyleBackColor = true;
             this.bDeleteAlbum.Click += new System.EventHandler(this.bDeleteAlbum_Click);
+            // 
+            // bNewAlbum
+            // 
+            this.bNewAlbum.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.bNewAlbum.Location = new System.Drawing.Point(117, 59);
+            this.bNewAlbum.Name = "bNewAlbum";
+            this.bNewAlbum.Size = new System.Drawing.Size(140, 35);
+            this.bNewAlbum.TabIndex = 1;
+            this.bNewAlbum.Text = "New Album";
+            this.bNewAlbum.UseVisualStyleBackColor = true;
+            this.bNewAlbum.Click += new System.EventHandler(this.bNewAlbum_Click);
             // 
             // tableLayoutPanel4
             // 

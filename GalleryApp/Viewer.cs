@@ -15,6 +15,7 @@ namespace GalleryApp
         private Photos photo;
         private List<Photos> photoList;
         private int imageIndex;
+        private Cyotek.Windows.Forms.ImageBox imb = new Cyotek.Windows.Forms.ImageBox();
 
         internal Photos Photo
         {
@@ -45,6 +46,12 @@ namespace GalleryApp
         public Viewer()
         {
             InitializeComponent();
+            tableLayoutPanel1.Controls.Add(imb);
+            imb.Dock = DockStyle.Fill;
+            imb.GridColor = Color.FromArgb(10,10,10);
+            imb.GridColorAlternate = Color.FromArgb(10,10,10);
+            imb.Padding = new Padding(0);
+            imb.BorderStyle = BorderStyle.None;
         }
 
         public void initializePictureBoxImage()
@@ -52,12 +59,9 @@ namespace GalleryApp
             if (!String.IsNullOrEmpty(photo.Name))
             {
                 Image img = Image.FromFile(photo.FullPath);
-                pictureBox1.Image = img;
-                pictureBox1.Refresh();
-                
+                getImageIndex();
+                setPictureBoxImage();
             }
-            getImageIndex();
-            setPictureBoxImage();
         }
         
         private void getImageIndex()
@@ -77,8 +81,9 @@ namespace GalleryApp
         private void setPictureBoxImage()
         {
             Bitmap bmp = new Bitmap(photoList[imageIndex].FullPath);
-            pictureBox1.Image = bmp;
-            pictureBox1.Refresh();
+            imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
+            imb.Image = bmp; 
+            imb.ZoomIn(true);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -143,20 +148,8 @@ namespace GalleryApp
                     break;
             }
         }
-
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {            
-            switch (e.Button)
-            {
-                case MouseButtons.Right:
-                    {
-                        rightClickMenuStrip.Show(this, new Point(e.X, e.Y));//places the menu at the pointer position
-                    }
-                    break;
-            }        
-        }
-
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        
+        private void propertiesToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ImagesProperties param = new ImagesProperties();
             param.Photo = photo;

@@ -131,11 +131,17 @@ namespace GalleryApp
                 if (String.IsNullOrEmpty(files[indPhoto].Alias))
                 {
                     FileInfo fileInfo = new FileInfo(files[indPhoto].FullPath);
-
-                    bytes = File.ReadAllBytes(files[indPhoto].FullPath);
-                    ms = new MemoryStream(bytes);
-                    Bitmap img = new Bitmap(Image.FromStream(ms), s);
-
+                    Bitmap img = new Bitmap(files[indPhoto].FullPath);
+                    /*if (img.Size.Width >= img.Size.Height)
+                    {
+                        s = new Size(100, (int)(100*img.Size.Height/(float)img.Size.Width));
+                    }
+                    else
+                    {
+                        MessageBox.Show("h>w");
+                        s = new Size((int)(75 * img.Size.Width / (float)img.Size.Height), 75);
+                    }*/
+                    img = new Bitmap(img, s);
                     Icon ic = Icon.FromHandle(img.GetHicon());
 
                     imageList1.Images.Add(ic);
