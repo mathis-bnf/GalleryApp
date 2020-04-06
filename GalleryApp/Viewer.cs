@@ -51,7 +51,7 @@ namespace GalleryApp
             imb.GridColor = Color.FromArgb(10,10,10);
             imb.GridColorAlternate = Color.FromArgb(10,10,10);
             imb.Padding = new Padding(0);
-            imb.BorderStyle = BorderStyle.None;
+            imb.BorderStyle = BorderStyle.FixedSingle;
         }
 
         public void initializePictureBoxImage()
