@@ -41,7 +41,10 @@ namespace GalleryApp
         {
             InitializeComponent();
         }
-        
+
+        /// <summary>
+        /// Charges and displays iamge properties
+        /// </summary>
         public void initialization()
         {
             Image = System.Drawing.Image.FromFile(photo.FullPath);

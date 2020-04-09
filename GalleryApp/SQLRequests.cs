@@ -8,6 +8,7 @@ namespace GalleryApp
 {
     class SQLRequests
     {
+        /// <summary>Selects all colums from YearFolder table</summary>
         public static List<YearFolder> selectAllFromYearFolder()
         {
             string queryString = "SELECT *  FROM YearFolder";
@@ -40,6 +41,9 @@ namespace GalleryApp
             return years;
         }
 
+        /// <summary>Inserts the photo in the database</summary>
+        /// <param name="folder">Folder full path </param>
+        /// <param name="photo">Photo full path</param>
         public static void insertIntoPhotos(String folder, String photo)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
@@ -62,6 +66,9 @@ namespace GalleryApp
             connection.Close();
         }
 
+        /// <summary>Does this year already exist in the database</summary>
+        /// <param name="year">Year</param>
+        /// <returns>Boolean representing if the year already exists in the database</returns>
         public static bool isYearExisting(int year)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
@@ -83,6 +90,9 @@ namespace GalleryApp
                 return false;
         }
 
+        /// <summary>Does this folder already exist in the database</summary>
+        /// <param name="fullPath">Folder full path</param>
+        /// <returns>Boolean representing if the folder already exists in the database</returns>
         public static bool isFolderExisting(String fullPath)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
@@ -103,6 +113,11 @@ namespace GalleryApp
             else
                 return false;
         }
+
+        /// <summary>Does this folder already exist in the database</summary>
+        /// <param name="fullPath">Folder full path</param>
+        /// <param name="year">Folder year</param>
+        /// <returns>Boolean representing if the folder already exists in the database</returns>
         public static bool isFolderExisting(String name, int year)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
@@ -125,6 +140,10 @@ namespace GalleryApp
                 return false;
         }
 
+        /// <summary>Inserts folder in the database</summary>
+        /// <param name="fullPath">Folder full path</param>
+        /// <param name="year">Folder year</param>
+        /// <param name="place">Place where folder photos were taken</param>
         public static void insertNewFolder(String fullPath, int year, String place)
         {
             string dirName = new DirectoryInfo(fullPath).Name;
@@ -165,9 +184,13 @@ namespace GalleryApp
                         Console.WriteLine("Error inserting data into Database!");
                 }
             }
-            loadPhotosInDB(fullPath, dirName);
+            loadPhotosInDB(fullPath);
         }
 
+        /// <summary>Gets every image name from this directory and subdirectories</summary>
+        /// <param name="searchFolder">Folder full path</param>
+        /// <param name="filters">File format filters (ex : "jpg", "png")</param>
+        /// <returns>Array containing every image full path from input directory and subdirectories</returns>
         public static String[] getFilesFrom(String searchFolder, String[] filters)
         {
             List<String> filesFound = new List<String>();
@@ -179,7 +202,9 @@ namespace GalleryApp
             return filesFound.ToArray();
         }
 
-        public static void loadPhotosInDB(String fullPath, String folder)
+        /// <summary>Insert photos from directory into database</summary>
+        /// <param name="fullPath">Folder full path</param>
+        public static void loadPhotosInDB(String fullPath)
         {
             var filters = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
             String[] photos = getFilesFrom(fullPath, filters);
@@ -189,6 +214,10 @@ namespace GalleryApp
             }
         }
 
+        /// <summary>Selects every images from a specified folder in the database</summary>
+        /// <param name="folder">Folder full path</param>
+        /// <param name="year">Folder year</param>
+        /// <returns>List containing every Photo from input Folder saved in the database</returns>
         public static List<Photos> selectImagesFromFolder(String folder, int year)
         {
             List<Photos> res = new List<Photos>();
@@ -218,6 +247,10 @@ namespace GalleryApp
             return res;
         }
 
+        /// <summary>Selects specified Photo from specified Folder</summary>
+        /// <param name="folder">Folder name (not full path)</param>
+        /// <param name="name">Image name (not full path)</param>
+        /// <returns>Photo corresponding to input parameters</returns>
         public static Photos selectOneImage(String folder, String name)
         {
             string query = @"SELECT * FROM Photos 
@@ -253,6 +286,10 @@ namespace GalleryApp
             return pic;
         }
 
+        /// <summary>Gets every image name from this directory and subdirectories</summary>
+        /// <param name="searchFolder">Folder full path</param>
+        /// <param name="filters">File format filters (ex : "jpg", "png")</param>
+        /// <returns>Array containing every image full path from input directory and subdirectories</returns>
         public static Folder selectParentFolder(Photos photo)
         {
             Folder folder = new GalleryApp.Folder();
@@ -289,6 +326,10 @@ namespace GalleryApp
             return folder;
         }
 
+        /// <summary>Adds an alias (cache path) to a specified Photo</summary>
+        /// <param name="newPath">Photo Alias</param>
+        /// <param name="oldPath">Photo full path</param>
+        /// <returns>Int representing if sql request went well</returns>
         public static int updatePhotoAlias(string newPath, string oldPath)
         {
             string query = @"UPDATE Photos 
@@ -309,6 +350,8 @@ namespace GalleryApp
             return result;
         }
 
+        /// <summary>Deletes Photo Alias from whole database</summary>
+        /// <returns>Int representing if sql request went well</returns>
         public static int deletePhotoAlias()
         {
             string query = @"UPDATE Photos 
@@ -326,6 +369,10 @@ namespace GalleryApp
             return result;
         }
 
+        /// <summary>Deletes specified folder from databse</summary>
+        /// <param name="folder">Folder full path</param>
+        /// <param name="year">Folder year</param>
+        /// <returns>Int representing if sql request went well</returns>
         public static int deleteFolder(String folder, int year)
         {
             string query = @"DELETE Photos FROM Photos 

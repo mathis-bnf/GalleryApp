@@ -22,6 +22,7 @@ namespace GalleryApp
             InitializeComponent();            
         }
 
+        /// <summary>Opens a Folder Browser Dialog and gets selected folder</summary>
         private void bFolder_Click(object sender, EventArgs e)
         {
             bFolder.ForeColor = Color.Black;
@@ -50,6 +51,7 @@ namespace GalleryApp
             return place;
         }
 
+        /// <summary>Verifies on button click if all required fields are completed</summary>
         private void bOK_Click(object sender, EventArgs e)
         {
             lYear.ForeColor = Color.Black;

@@ -17,6 +17,7 @@ namespace GalleryApp
             InitializeComponent();
         }
 
+        /// <summary>Updates progress bar value</summary>
         public void updateProgress(int progress)
         {
             lbProgress.Text = String.Format("{0}", progress) + " %";

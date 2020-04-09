@@ -15,16 +15,26 @@ namespace GalleryApp
         BackgroundWorker bgw1 = new BackgroundWorker();
 
         #region BackGroundWorker methods
+
+        /// <summary>
+        /// BackgroundWorker used to charge images in the ListView
+        /// </summary>
         private void bgw1_DoWork(object sender, DoWorkEventArgs e)
         {
             displayImages();
         }
 
+        /// <summary>
+        /// Update Progress bar
+        /// </summary>
         private void bgw1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressDialog.updateProgress(e.ProgressPercentage);
         }
 
+        /// <summary>
+        /// Close progress bar
+        /// </summary>
         private void bgw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressDialog.Dispose();
@@ -43,6 +53,9 @@ namespace GalleryApp
             updateTreeViewNodes();
         }
 
+        /// <summary>
+        /// Updates the MainWindow's TreeView with data from DB
+        /// </summary>
         public void updateTreeViewNodes()
         {
             treeView1.Nodes.Clear();
@@ -94,7 +107,10 @@ namespace GalleryApp
                 connection.Close();
             }
         }
-
+        
+        /// <summary>
+        /// Opens new folder dialog and insert it into DB
+        /// </summary>
         private void bNewAlbum_Click(object sender, EventArgs e)
         {
             SelectNewFolder f = new GalleryApp.SelectNewFolder();
@@ -114,8 +130,11 @@ namespace GalleryApp
                     MessageBox.Show("This album already exists");
                 }            
             }
-        }                
-        
+        }
+
+        /// <summary>
+        /// Displays all images in ListView from TreeView selected folder
+        /// </summary>
         private void displayImages()
         {
             imageList1.Images.Clear();
@@ -174,7 +193,10 @@ namespace GalleryApp
             }
 
         }
-        
+
+        /// <summary>
+        /// Selects clicked image and charge it into new image Viewer
+        /// </summary>
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             Viewer viewer = new Viewer();
@@ -185,6 +207,9 @@ namespace GalleryApp
             viewer.Focus();
         }
 
+        /// <summary>
+        /// Deletes cached data
+        /// </summary>
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (SQLRequests.deletePhotoAlias() >= 0)
@@ -193,6 +218,9 @@ namespace GalleryApp
             }
         }
 
+        /// <summary>
+        /// Calls the method to display images in the ListView and display a progress bar
+        /// </summary>
         private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (!bgw1.IsBusy)
@@ -212,11 +240,17 @@ namespace GalleryApp
             }
         }
 
+        /// <summary>
+        /// Calls the method to delete an album
+        /// </summary>
         private void bDeleteAlbum_Click(object sender, EventArgs e)
         {
             albumDeletion();                  
         }
 
+        /// <summary>
+        /// Deletes the selected folder in the TreeView
+        /// </summary>
         private void albumDeletion()
         {
             if (treeView1.Nodes.Count > 0)

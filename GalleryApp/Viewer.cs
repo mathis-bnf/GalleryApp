@@ -54,16 +54,21 @@ namespace GalleryApp
             imb.BorderStyle = BorderStyle.FixedSingle;
         }
 
+        /// <summary>
+        /// Charges image into pictureBox and get image index (in the image list)
+        /// </summary>
         public void initializePictureBoxImage()
         {
             if (!String.IsNullOrEmpty(photo.Name))
             {
-                Image img = Image.FromFile(photo.FullPath);
                 getImageIndex();
                 setPictureBoxImage();
             }
         }
-        
+
+        /// <summary>
+        /// Gets image index (in the image list)
+        /// </summary>
         private void getImageIndex()
         {
             if (photoList.Count > 0)
@@ -76,8 +81,11 @@ namespace GalleryApp
                 }
                 imageIndex = index;
             }
-        }        
+        }
 
+        /// <summary>
+        /// Sets picturebox image
+        /// </summary>
         private void setPictureBoxImage()
         {
             Bitmap bmp = new Bitmap(photoList[imageIndex].FullPath);
@@ -86,6 +94,9 @@ namespace GalleryApp
             imb.ZoomIn(true);
         }
 
+        /// <summary>
+        /// Sets previous image (in the list) to the picturebox when left button is clicked
+        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
             if (imageIndex > 0)
@@ -99,6 +110,9 @@ namespace GalleryApp
             setPictureBoxImage();
         }
 
+        /// <summary>
+        /// Sets next image (in the list) to the picturebox when right button is clicked
+        /// </summary>
         private void button2_Click(object sender, EventArgs e)
         {
             if (imageIndex < photoList.Count - 1)
@@ -112,6 +126,9 @@ namespace GalleryApp
             setPictureBoxImage();
         }
 
+        /// <summary>
+        /// Sets previous or next image (in the list) to the picturebox when left or right keyboard ket is clicked
+        /// </summary>
         private void Viewer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
@@ -148,7 +165,10 @@ namespace GalleryApp
                     break;
             }
         }
-        
+
+        /// <summary>
+        /// Opens properties dialog when menu strip is clicked
+        /// </summary>
         private void propertiesToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ImagesProperties param = new ImagesProperties();
