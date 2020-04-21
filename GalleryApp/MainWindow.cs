@@ -44,8 +44,12 @@ namespace GalleryApp
         public MainWindow()
         {
             InitializeComponent();
-            if(!Directory.Exists(@".\Cache"))
-                Directory.CreateDirectory(@".\Cache");           
+            if (!Directory.Exists(@".\Cache"))
+            {
+                DirectoryInfo di = new DirectoryInfo(@".\Cache");
+                di.Create();
+                di.Attributes |= FileAttributes.Hidden;
+            }       
         }
 
         private void bChargeDB_Click(object sender, EventArgs e)

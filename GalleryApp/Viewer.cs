@@ -52,6 +52,8 @@ namespace GalleryApp
             imb.GridColorAlternate = Color.FromArgb(10,10,10);
             imb.Padding = new Padding(0);
             imb.BorderStyle = BorderStyle.FixedSingle;
+            imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
+            imb.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.imb_PreviewKeyDown);
         }
 
         /// <summary>
@@ -89,15 +91,16 @@ namespace GalleryApp
         private void setPictureBoxImage()
         {
             Bitmap bmp = new Bitmap(photoList[imageIndex].FullPath);
-            imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
-            imb.Image = bmp; 
+            photo = photoList[imageIndex];
+            imb.Image = bmp;
             imb.ZoomIn(true);
+            imb.ZoomToFit();
         }
 
         /// <summary>
         /// Sets previous image (in the list) to the picturebox when left button is clicked
         /// </summary>
-        private void button1_Click(object sender, EventArgs e)
+        private void bPreviousPhoto_Click(object sender, EventArgs e)
         {
             if (imageIndex > 0)
             {
@@ -107,13 +110,14 @@ namespace GalleryApp
             {
                 imageIndex = photoList.Count - 1;
             }
-            setPictureBoxImage();
+            this.setPictureBoxImage();
+            this.ActiveControl = imb;
         }
 
         /// <summary>
         /// Sets next image (in the list) to the picturebox when right button is clicked
         /// </summary>
-        private void button2_Click(object sender, EventArgs e)
+        private void bNextPhoto_Click(object sender, EventArgs e)
         {
             if (imageIndex < photoList.Count - 1)
             {
@@ -123,13 +127,14 @@ namespace GalleryApp
             {
                 imageIndex = 0;
             }
-            setPictureBoxImage();
+            this.setPictureBoxImage();
+            this.ActiveControl = imb;
         }
 
         /// <summary>
         /// Sets previous or next image (in the list) to the picturebox when left or right keyboard ket is clicked
         /// </summary>
-        private void Viewer_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void imb_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -165,7 +170,7 @@ namespace GalleryApp
                     break;
             }
         }
-
+        
         /// <summary>
         /// Opens properties dialog when menu strip is clicked
         /// </summary>
