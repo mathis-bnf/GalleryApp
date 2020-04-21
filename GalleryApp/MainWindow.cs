@@ -155,17 +155,23 @@ namespace GalleryApp
                 {
                     FileInfo fileInfo = new FileInfo(files[indPhoto].FullPath);
                     Bitmap img = new Bitmap(files[indPhoto].FullPath);
-                    /*if (img.Size.Width >= img.Size.Height)
+                    double ratioWH = img.Size.Width / (double)img.Size.Height;
+                    Bitmap png = new Bitmap(100, 75);
+                    if (ratioWH>=1)
                     {
-                        s = new Size(100, (int)(100*img.Size.Height/(float)img.Size.Width));
+                        img = new Bitmap(img, 100, (int)(100 / ratioWH));
+                        using (Graphics G = Graphics.FromImage(png))
+                            G.DrawImage(img, 0, png.Height / 2 - img.Height / 2);
                     }
                     else
                     {
-                        MessageBox.Show("h>w");
-                        s = new Size((int)(75 * img.Size.Width / (float)img.Size.Height), 75);
-                    }*/
-                    img = new Bitmap(img, s);
-                    Icon ic = Icon.FromHandle(img.GetHicon());
+                        img = new Bitmap(img, (int)(75 * ratioWH), 75);
+                        using (Graphics G = Graphics.FromImage(png))
+                            G.DrawImage(img, png.Width / 2 - img.Width / 2, 0);
+                    }
+
+                    //img = new Bitmap(img, s);
+                    Icon ic = Icon.FromHandle(png.GetHicon());
 
                     imageList1.Images.Add(ic);
                     listView1.Items.Add(fileInfo.Name, indPhoto);

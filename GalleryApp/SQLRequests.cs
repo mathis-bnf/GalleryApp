@@ -114,6 +114,32 @@ namespace GalleryApp
                 return false;
         }
 
+        /// <summary>Does this photo already exist in the database</summary>
+        /// <param name="FolderFullPath">Folder full path</param>
+        /// <param name="PhotoFullPath">Photo full path</param>
+        /// <returns>Boolean representing if the photo already exists in the database</returns>
+        public static bool isPhotoExisting(String FolderFullPath, String PhotoFullPath)
+        {
+            string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
+            string query = "SELECT * FROM Photo WHERE [FullPath]=@FullPath AND [Folder]=@Folder";
+            SqlConnection connection = new SqlConnection(connectionID);
+            int i = 0;
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@FullPath", PhotoFullPath);
+                command.Parameters.AddWithValue("@Folder", FolderFullPath);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    i++;
+            }
+            connection.Close();
+            if (i > 0)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>Does this folder already exist in the database</summary>
         /// <param name="fullPath">Folder full path</param>
         /// <param name="year">Folder year</param>
@@ -210,7 +236,10 @@ namespace GalleryApp
             String[] photos = getFilesFrom(fullPath, filters);
             foreach (String photo in photos)
             {
-                SQLRequests.insertIntoPhotos(fullPath, photo);
+                //if (!isPhotoExisting(fullPath, photo))
+                    SQLRequests.insertIntoPhotos(fullPath, photo);
+                //else
+                    //MessageBox.Show("This photo already exists in the application");
             }
         }
 

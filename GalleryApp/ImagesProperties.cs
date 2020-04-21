@@ -49,8 +49,15 @@ namespace GalleryApp
         {
             Image = System.Drawing.Image.FromFile(photo.FullPath);
             lbFilename.Text = photo.Name;
-            // Date : 0x0132            
-            lbDate.Text = Encoding.UTF8.GetString(Image.GetPropertyItem(0x0132).Value);
+            try
+            {
+                // Prise de vue : 0x0132 
+                lbDate.Text = Encoding.UTF8.GetString(Image.GetPropertyItem(0x0132).Value);
+            }
+            catch (ArgumentException e)
+            {
+                lbDate.Text = File.GetCreationTime(photo.FullPath).ToString() ;
+            }
             lbDimensions.Text = Image.Width + "x" + Image.Height;
             Folder folder = SQLRequests.selectParentFolder(photo);
 
