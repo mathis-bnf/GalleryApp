@@ -121,7 +121,7 @@ namespace GalleryApp
         public static bool isPhotoExisting(String FolderFullPath, String PhotoFullPath)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
-            string query = "SELECT * FROM Photo WHERE [FullPath]=@FullPath AND [Folder]=@Folder";
+            string query = "SELECT * FROM Photos WHERE [FullPath]=@FullPath AND [Folder]=@Folder";
             SqlConnection connection = new SqlConnection(connectionID);
             int i = 0;
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -236,10 +236,10 @@ namespace GalleryApp
             String[] photos = getFilesFrom(fullPath, filters);
             foreach (String photo in photos)
             {
-                //if (!isPhotoExisting(fullPath, photo))
+                if (!isPhotoExisting(fullPath, photo))
                     SQLRequests.insertIntoPhotos(fullPath, photo);
-                //else
-                    //MessageBox.Show("This photo already exists in the application");
+                else
+                    MessageBox.Show("This photo already exists in the application");
             }
         }
 
