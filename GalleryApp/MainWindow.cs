@@ -49,7 +49,23 @@ namespace GalleryApp
                 DirectoryInfo di = new DirectoryInfo(@".\Cache");
                 di.Create();
                 di.Attributes |= FileAttributes.Hidden;
-            }       
+            }
+            updateTreeViewNodes();
+            searchForNewPhotos();       
+        }
+
+        private void searchForNewPhotos()
+        {
+            TreeNodeCollection years = treeView1.Nodes;
+            foreach (TreeNode year in years)
+            {
+                TreeNodeCollection folders = year.Nodes;
+                foreach (TreeNode folder in folders)
+                {
+                    String fullPath = SQLRequests.selectFolderFullPath(folder.Text, Int32.Parse(year.Text));
+                    SQLRequests.addNewPhotos(fullPath);
+                }
+            }
         }
 
         private void bChargeDB_Click(object sender, EventArgs e)
@@ -153,40 +169,45 @@ namespace GalleryApp
                 string path = @".\Cache\" + treeView1.SelectedNode.Parent.Text + @"\" + treeView1.SelectedNode.Text + @"\";
                 if (String.IsNullOrEmpty(files[indPhoto].Alias))
                 {
-                    FileInfo fileInfo = new FileInfo(files[indPhoto].FullPath);
-                    Bitmap img = new Bitmap(files[indPhoto].FullPath);
-                    double ratioWH = img.Size.Width / (double)img.Size.Height;
-                    Bitmap png = new Bitmap(100, 75);
-                    if (ratioWH>=1)
+                    if (File.Exists(files[indPhoto].FullPath))
                     {
-                        img = new Bitmap(img, 100, (int)(100 / ratioWH));
-                        using (Graphics G = Graphics.FromImage(png))
-                            G.DrawImage(img, 0, png.Height / 2 - img.Height / 2);
+                        FileInfo fileInfo = new FileInfo(files[indPhoto].FullPath);
+                        Bitmap img = new Bitmap(files[indPhoto].FullPath);
+                        double ratioWH = img.Size.Width / (double)img.Size.Height;
+                        Bitmap png = new Bitmap(100, 75);
+                        if (ratioWH >= 1)
+                        {
+                            img = new Bitmap(img, 100, (int)(100 / ratioWH));
+                            using (Graphics G = Graphics.FromImage(png))
+                                G.DrawImage(img, 0, png.Height / 2 - img.Height / 2);
+                        }
+                        else
+                        {
+                            img = new Bitmap(img, (int)(75 * ratioWH), 75);
+                            using (Graphics G = Graphics.FromImage(png))
+                                G.DrawImage(img, png.Width / 2 - img.Width / 2, 0);
+                        }
+
+                        Icon ic = Icon.FromHandle(png.GetHicon());
+
+                        imageList1.Images.Add(ic);
+                        listView1.Items.Add(fileInfo.Name, indPhoto);
+                        if (bgw1.IsBusy)
+                            bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
+
+                        path += files[indPhoto].Name;
+                        int resultUpdate = SQLRequests.updatePhotoAlias(path, files[indPhoto].FullPath);
+                        if (resultUpdate >= 0)
+                            img.Save(path);
                     }
                     else
                     {
-                        img = new Bitmap(img, (int)(75 * ratioWH), 75);
-                        using (Graphics G = Graphics.FromImage(png))
-                            G.DrawImage(img, png.Width / 2 - img.Width / 2, 0);
+                        SQLRequests.deletePhoto(files[indPhoto].FullPath);
                     }
-
-                    //img = new Bitmap(img, s);
-                    Icon ic = Icon.FromHandle(png.GetHicon());
-
-                    imageList1.Images.Add(ic);
-                    listView1.Items.Add(fileInfo.Name, indPhoto);
-                    if (bgw1.IsBusy)
-                        bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
-
-                    path += files[indPhoto].Name;
-                    int resultUpdate = SQLRequests.updatePhotoAlias(path, files[indPhoto].FullPath);
-                    if(resultUpdate >= 0)
-                        img.Save(path);
                 }
                 else
                 {
                     path += files[indPhoto].Name;
-                    //MessageBox.Show(path);
                     FileInfo fileInfo = new FileInfo(path);
 
                     bytes = File.ReadAllBytes(path);

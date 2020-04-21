@@ -43,18 +43,18 @@ namespace GalleryApp
 
         /// <summary>Inserts the photo in the database</summary>
         /// <param name="folder">Folder full path </param>
-        /// <param name="photo">Photo full path</param>
-        public static void insertIntoPhotos(String folder, String photo)
+        /// <param name="photoFullPath">Photo full path</param>
+        public static void insertIntoPhotos(String folder, String photoFullPath)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
             string query = "INSERT INTO Photos (Folder, Name, FullPath) VALUES (@Folder, @Name, @FullPath)";
-            string fileName = new FileInfo(photo).Name;
+            string fileName = new FileInfo(photoFullPath).Name;
             SqlConnection connection = new SqlConnection(connectionID);
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@Folder", folder);
                 command.Parameters.AddWithValue("@Name", fileName);
-                command.Parameters.AddWithValue("@FullPath", photo);
+                command.Parameters.AddWithValue("@FullPath", photoFullPath);
 
                 connection.Open();
                 int result = command.ExecuteNonQuery();
@@ -115,10 +115,10 @@ namespace GalleryApp
         }
 
         /// <summary>Does this photo already exist in the database</summary>
-        /// <param name="FolderFullPath">Folder full path</param>
-        /// <param name="PhotoFullPath">Photo full path</param>
+        /// <param name="folderFullPath">Folder full path</param>
+        /// <param name="photoFullPath">Photo full path</param>
         /// <returns>Boolean representing if the photo already exists in the database</returns>
-        public static bool isPhotoExisting(String FolderFullPath, String PhotoFullPath)
+        public static bool isPhotoExisting(String folderFullPath, String photoFullPath)
         {
             string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
             string query = "SELECT * FROM Photos WHERE [FullPath]=@FullPath AND [Folder]=@Folder";
@@ -127,8 +127,8 @@ namespace GalleryApp
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 connection.Open();
-                command.Parameters.AddWithValue("@FullPath", PhotoFullPath);
-                command.Parameters.AddWithValue("@Folder", FolderFullPath);
+                command.Parameters.AddWithValue("@FullPath", photoFullPath);
+                command.Parameters.AddWithValue("@Folder", folderFullPath);
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                     i++;
@@ -164,6 +164,30 @@ namespace GalleryApp
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>Selects the folder full path from name and year</summary>
+        /// <param name="fullPath">Folder full path</param>
+        /// <param name="year">Folder year</param>
+        /// <returns>Boolean representing if the folder already exists in the database</returns>
+        public static String selectFolderFullPath(String name, int year)
+        {
+            string connectionID = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True;";
+            string query = "SELECT * FROM Folder WHERE [Name]=@Name AND [Year]=year";
+            SqlConnection connection = new SqlConnection(connectionID);
+            int i = 0;
+            String res = "";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Year", year);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    res = String.Format("{0}", reader["FullPath"]);
+            }
+            connection.Close();
+            return res;
         }
 
         /// <summary>Inserts folder in the database</summary>
@@ -398,7 +422,7 @@ namespace GalleryApp
             return result;
         }
 
-        /// <summary>Deletes specified folder from databse</summary>
+        /// <summary>Deletes specified folder from database</summary>
         /// <param name="folder">Folder full path</param>
         /// <param name="year">Folder year</param>
         /// <returns>Int representing if sql request went well</returns>
@@ -469,6 +493,41 @@ namespace GalleryApp
                         connection.Close();
                     }
                 }
+            }
+            return result;
+        }
+
+        /// <summary>Adds new photos from folder that are not stored yet in the dabase</summary>
+        /// <param name="folderFullPath">Folder full path</param>
+        public static void addNewPhotos(String folderFullPath)
+        {
+            var filters = new String[] { "jpg", "jpeg", "png", "gif", "tiff", "bmp", "svg" };
+            string[] photos = getFilesFrom(folderFullPath, filters);
+            foreach(string photo in photos)
+            {
+                if(!isPhotoExisting(folderFullPath, photo))
+                {
+                    insertIntoPhotos(folderFullPath, photo);
+                }
+            }
+        }
+
+        /// <summary>Deletes specified photo from database</summary>
+        /// <param name="photoFullPath">Photo full path</param>
+        /// <returns>Int representing if sql request went well</returns>
+        public static int deletePhoto(String photoFullPath)
+        {
+            string query = @"DELETE Photos FROM Photos 
+            WHERE Photos.FullPath = @fullPath";
+            string connectionString = @"Server=localhost;Database=GalleryDB;Trusted_Connection=True";
+            int result = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@fullPath", photoFullPath);
+                connection.Open();
+                result = command.ExecuteNonQuery();
+                connection.Close();
             }
             return result;
         }
