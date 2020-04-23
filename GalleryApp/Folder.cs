@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalleryApp
 {
-    class Folder
+    public class Folder
     {
         private int year;
         private String name;

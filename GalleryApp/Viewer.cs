@@ -10,12 +10,14 @@ using System.Windows.Forms;
 
 namespace GalleryApp
 {
-    public partial class Viewer : Form
+    partial class Viewer : Form
     {
         private Photos photo;
         private List<Photos> photoList;
         private int imageIndex;
-        private Cyotek.Windows.Forms.ImageBox imb = new Cyotek.Windows.Forms.ImageBox();
+        private Cyotek.Windows.Forms.ImageBox imb;
+        private Yolo detector;
+        BackgroundWorker bgwYolo;
 
         internal Photos Photo
         {
@@ -43,9 +45,23 @@ namespace GalleryApp
             }
         }
 
+        internal Yolo Detector
+        {
+            get
+            {
+                return detector;
+            }
+
+            set
+            {
+                detector = value;
+            }
+        }
+
         public Viewer()
         {
             InitializeComponent();
+            imb = new Cyotek.Windows.Forms.ImageBox();
             tableLayoutPanel1.Controls.Add(imb);
             imb.Dock = DockStyle.Fill;
             imb.GridColor = Color.FromArgb(10,10,10);
@@ -54,18 +70,30 @@ namespace GalleryApp
             imb.BorderStyle = BorderStyle.FixedSingle;
             imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
             imb.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.imb_PreviewKeyDown);
+            bgwYolo = new BackgroundWorker();
         }
 
         /// <summary>
         /// Charges image into pictureBox and get image index (in the image list)
         /// </summary>
-        public void initializePictureBoxImage()
+        private void initializePictureBoxImage()
         {
             if (!String.IsNullOrEmpty(photo.Name))
             {
                 getImageIndex();
                 setPictureBoxImage();
             }
+        }
+
+        public void initialize()
+        {
+            initializePictureBoxImage();
+        }
+
+        public void initialize(Yolo objectDetector)
+        {
+            this.Detector = objectDetector;
+            initializePictureBoxImage();
         }
 
         /// <summary>
@@ -95,7 +123,21 @@ namespace GalleryApp
             imb.Image = bmp;
             imb.ZoomIn(true);
             imb.ZoomToFit();
+            detectObjects();
         }
+
+        private void detectObjects()
+        {
+            if (!bgwYolo.IsBusy)
+            {
+                bgwYolo = new BackgroundWorker();
+                bgwYolo.DoWork += new DoWorkEventHandler(bgwYolo_DoWork);
+
+                bgwYolo.RunWorkerAsync();
+                bgwYolo.Dispose();
+            }
+        }
+        
 
         /// <summary>
         /// Sets previous image (in the list) to the picturebox when left button is clicked
@@ -180,5 +222,15 @@ namespace GalleryApp
             param.Photo = photo;
             param.initialization();
         }
+
+        #region BackGroundWorker methods
+        /// <summary>
+        /// BackgroundWorker used for YOLO to detect objects in photos
+        /// </summary>
+        private void bgwYolo_DoWork(object sender, DoWorkEventArgs e)
+        {
+            detector.detect(this.Photo);
+        }
+        #endregion
     }
 }

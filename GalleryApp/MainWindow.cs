@@ -11,15 +11,16 @@ namespace GalleryApp
 {
     public partial class MainWindow : Form
     {
-        ProgressDialog progressDialog;
-        BackgroundWorker bgw1 = new BackgroundWorker();
+        private ProgressDialog progressDialog;
+        private BackgroundWorker bgwDisplayImages = new BackgroundWorker();
+        private Yolo detector = new Yolo();
 
         #region BackGroundWorker methods
 
         /// <summary>
         /// BackgroundWorker used to charge images in the ListView
         /// </summary>
-        private void bgw1_DoWork(object sender, DoWorkEventArgs e)
+        private void bgwDisplayImages_DoWork(object sender, DoWorkEventArgs e)
         {
             displayImages();
         }
@@ -27,7 +28,7 @@ namespace GalleryApp
         /// <summary>
         /// Update Progress bar
         /// </summary>
-        private void bgw1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void bgwDisplayImages_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressDialog.updateProgress(e.ProgressPercentage);
         }
@@ -35,10 +36,11 @@ namespace GalleryApp
         /// <summary>
         /// Close progress bar
         /// </summary>
-        private void bgw1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void bgwDisplayImages_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressDialog.Dispose();
-        }
+        }        
+        
         #endregion
 
         public MainWindow()
@@ -174,16 +176,16 @@ namespace GalleryApp
                         FileInfo fileInfo = new FileInfo(files[indPhoto].FullPath);
                         Bitmap img = new Bitmap(files[indPhoto].FullPath);
                         double ratioWH = img.Size.Width / (double)img.Size.Height;
-                        Bitmap png = new Bitmap(100, 75);
+                        Bitmap png = new Bitmap(96, 72);
                         if (ratioWH >= 1)
                         {
-                            img = new Bitmap(img, 100, (int)(100 / ratioWH));
+                            img = new Bitmap(img, 96, (int)(96 / ratioWH));
                             using (Graphics G = Graphics.FromImage(png))
                                 G.DrawImage(img, 0, png.Height / 2 - img.Height / 2);
                         }
                         else
                         {
-                            img = new Bitmap(img, (int)(75 * ratioWH), 75);
+                            img = new Bitmap(img, (int)(72 * ratioWH), 72);
                             using (Graphics G = Graphics.FromImage(png))
                                 G.DrawImage(img, png.Width / 2 - img.Width / 2, 0);
                         }
@@ -192,13 +194,13 @@ namespace GalleryApp
 
                         imageList1.Images.Add(ic);
                         listView1.Items.Add(fileInfo.Name, indPhoto);
-                        if (bgw1.IsBusy)
-                            bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
+                        if (bgwDisplayImages.IsBusy)
+                            bgwDisplayImages.ReportProgress(100 * (indPhoto + 1) / files.Count);
 
                         path += files[indPhoto].Name;
                         int resultUpdate = SQLRequests.updatePhotoAlias(path, files[indPhoto].FullPath);
                         if (resultUpdate >= 0)
-                            img.Save(path);
+                            png.Save(path);
                     }
                     else
                     {
@@ -218,8 +220,8 @@ namespace GalleryApp
 
                     imageList1.Images.Add(ic);
                     listView1.Items.Add(fileInfo.Name, indPhoto);
-                    if (bgw1.IsBusy)
-                        bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
+                    if (bgwDisplayImages.IsBusy)
+                        bgwDisplayImages.ReportProgress(100 * (indPhoto + 1) / files.Count);
                 }
             }
 
@@ -233,9 +235,12 @@ namespace GalleryApp
             Viewer viewer = new Viewer();
             viewer.Photo = SQLRequests.selectOneImage(treeView1.SelectedNode.Text, listView1.SelectedItems[0].Text);
             viewer.PhotoList = SQLRequests.selectImagesFromFolder(treeView1.SelectedNode.Text, Int32.Parse(treeView1.SelectedNode.Parent.Text));
-            viewer.initializePictureBoxImage();
+            //viewer.initializePictureBoxImage();
+            if (cbObjectDetection.Checked)
+                viewer.initialize(detector);
+            else
+                viewer.initialize();
             viewer.Show();
-            viewer.Focus();
         }
 
         /// <summary>
@@ -254,20 +259,20 @@ namespace GalleryApp
         /// </summary>
         private void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (!bgw1.IsBusy)
+            if (!bgwDisplayImages.IsBusy)
             {
-                bgw1 = new BackgroundWorker();
-                bgw1.DoWork += new DoWorkEventHandler(bgw1_DoWork);
-                bgw1.ProgressChanged += new ProgressChangedEventHandler(bgw1_ProgressChanged);
-                bgw1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw1_RunWorkerCompleted);
-                bgw1.WorkerReportsProgress = true;
+                bgwDisplayImages = new BackgroundWorker();
+                bgwDisplayImages.DoWork += new DoWorkEventHandler(bgwDisplayImages_DoWork);
+                bgwDisplayImages.ProgressChanged += new ProgressChangedEventHandler(bgwDisplayImages_ProgressChanged);
+                bgwDisplayImages.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgwDisplayImages_RunWorkerCompleted);
+                bgwDisplayImages.WorkerReportsProgress = true;
 
                 progressDialog = new ProgressDialog();
                 progressDialog.Show();
                 progressDialog.TopMost = true;
 
-                bgw1.RunWorkerAsync();
-                bgw1.Dispose();
+                bgwDisplayImages.RunWorkerAsync();
+                bgwDisplayImages.Dispose();
             }
         }
 

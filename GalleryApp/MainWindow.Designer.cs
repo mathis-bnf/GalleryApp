@@ -32,19 +32,21 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.bChargeDB = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.bDeleteAlbum = new System.Windows.Forms.Button();
             this.bNewAlbum = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbObjectDetection = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.ForeColor = System.Drawing.SystemColors.Window;
             this.listView1.LargeImageList = this.imageList1;
             this.listView1.Location = new System.Drawing.Point(383, 3);
@@ -66,10 +68,10 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.bChargeDB, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.bDeleteAlbum, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.bNewAlbum, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.cbObjectDetection, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -80,17 +82,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(374, 1027);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // bChargeDB
-            // 
-            this.bChargeDB.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bChargeDB.Location = new System.Drawing.Point(117, 8);
-            this.bChargeDB.Name = "bChargeDB";
-            this.bChargeDB.Size = new System.Drawing.Size(140, 35);
-            this.bChargeDB.TabIndex = 0;
-            this.bChargeDB.Text = "Charge DB";
-            this.bChargeDB.UseVisualStyleBackColor = true;
-            this.bChargeDB.Click += new System.EventHandler(this.bChargeDB_Click);
             // 
             // treeView1
             // 
@@ -140,6 +131,18 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1902, 1033);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
+            // cbObjectDetection
+            // 
+            this.cbObjectDetection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.cbObjectDetection.AutoSize = true;
+            this.cbObjectDetection.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.cbObjectDetection.Location = new System.Drawing.Point(120, 3);
+            this.cbObjectDetection.Name = "cbObjectDetection";
+            this.cbObjectDetection.Size = new System.Drawing.Size(133, 45);
+            this.cbObjectDetection.TabIndex = 4;
+            this.cbObjectDetection.Text = "Object detection";
+            this.cbObjectDetection.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -155,6 +158,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
@@ -165,12 +169,12 @@
 
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button bChargeDB;
         private System.Windows.Forms.Button bNewAlbum;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button bDeleteAlbum;
+        private System.Windows.Forms.CheckBox cbObjectDetection;
     }
 }
 

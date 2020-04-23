@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalleryApp
 {
-    class Photos
+    public class Photos
     {
         private String folder;
         private String name;
