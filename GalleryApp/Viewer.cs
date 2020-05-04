@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Emgu.CV;
+using Emgu.Util;
+using Emgu.CV.Structure;
 
 namespace GalleryApp
 {
@@ -46,7 +49,7 @@ namespace GalleryApp
         public Viewer()
         {
             InitializeComponent();
-            tableLayoutPanel1.Controls.Add(imb);
+            tlpImage.Controls.Add(imb);
             imb.Dock = DockStyle.Fill;
             imb.GridColor = Color.FromArgb(10,10,10);
             imb.GridColorAlternate = Color.FromArgb(10,10,10);
@@ -54,6 +57,15 @@ namespace GalleryApp
             imb.BorderStyle = BorderStyle.FixedSingle;
             imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
             imb.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.imb_PreviewKeyDown);
+            imb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseClick);
+        }
+
+        private void treeView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenuStrip1.Show(this, new Point(e.X, e.Y));                
+            }
         }
 
         /// <summary>
@@ -170,15 +182,87 @@ namespace GalleryApp
                     break;
             }
         }
-        
-        /// <summary>
-        /// Opens properties dialog when menu strip is clicked
-        /// </summary>
-        private void propertiesToolStripMenuItem2_Click(object sender, EventArgs e)
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ImagesProperties param = new ImagesProperties();
             param.Photo = photo;
             param.initialization();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TableLayoutColumnStyleCollection styles = tlpBackGround.ColumnStyles;
+            int i = 0;
+            foreach (ColumnStyle style in styles)
+            {
+                if (i == 1 )
+                {
+                    if (style.Width == 2)
+                    {
+                        style.SizeType = SizeType.Percent;
+                        style.Width = 15;
+                    }
+                    else if (style.Width == 15)
+                    {
+                        style.SizeType = SizeType.Percent;
+                        style.Width = 2;
+                    }
+                }
+                
+                i++;
+            }
+        }
+
+        private void tbBrightness_Scroll(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked)
+            {
+                int value = 10 * (tbBrightness.Value - 10);
+                if (value > 0)
+                    lbBrightnessValue.Text = "+" + (value).ToString() + "%";
+                else
+                    lbBrightnessValue.Text = (value).ToString() + "%";
+
+                Image<Rgb, Byte> image = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+                image = image.Mul(1 + (value / 100f));
+                imb.Image = image.Bitmap;
+                imb.ZoomIn(true);
+                imb.ZoomToFit();
+            }
+            else
+            {
+                int value = 10 * (tbBrightness.Value - 10);
+                if (value > 0)
+                    lbBrightnessValue.Text = "+" + (value).ToString() + "%";
+                else
+                    lbBrightnessValue.Text = (value).ToString() + "%";
+
+                Image<Rgb, Byte> image = new Image<Rgb, byte>(new Bitmap(imb.Image));
+                image = image.Mul(1 + (value / 100f));
+                imb.Image = image.Bitmap;
+                imb.ZoomIn(true);
+                imb.ZoomToFit();
+            }
+        }
+        private void HistEq()
+        {
+            Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+            inputImage._EqualizeHist();
+            imb.Image = inputImage.Bitmap;
+        }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                HistEq();
+            }
+            else
+            {
+                Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+                imb.Image = inputImage.Bitmap;
+            }
+
         }
     }
 }
