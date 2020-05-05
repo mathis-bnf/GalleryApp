@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
-using Emgu.Util;
 using Emgu.CV.Structure;
 
 namespace GalleryApp
@@ -19,6 +13,8 @@ namespace GalleryApp
         private List<Photos> photoList;
         private int imageIndex;
         private Cyotek.Windows.Forms.ImageBox imb = new Cyotek.Windows.Forms.ImageBox();
+        private int brightnessPercent = 0;
+        private int saturationPercent = 0;
 
         internal Photos Photo
         {
@@ -46,6 +42,32 @@ namespace GalleryApp
             }
         }
 
+        internal int BrightnessPercent
+        {
+            get
+            {
+                return brightnessPercent;
+            }
+
+            set
+            {
+                brightnessPercent = value;
+            }
+        }
+
+        internal int SaturationPercent
+        {
+            get
+            {
+                return saturationPercent;
+            }
+
+            set
+            {
+                saturationPercent = value;
+            }
+        }
+        
         public Viewer()
         {
             InitializeComponent();
@@ -58,6 +80,7 @@ namespace GalleryApp
             imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
             imb.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.imb_PreviewKeyDown);
             imb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseClick);
+            makeMenuTransparent();
         }
 
         private void treeView1_MouseClick(object sender, MouseEventArgs e)
@@ -124,6 +147,10 @@ namespace GalleryApp
             }
             this.setPictureBoxImage();
             this.ActiveControl = imb;
+            BrightnessPercent = 0;
+            SaturationPercent = 0;
+            updateSaturationValueLabel();
+            updateBrightlessValueLabel();
         }
 
         /// <summary>
@@ -141,6 +168,10 @@ namespace GalleryApp
             }
             this.setPictureBoxImage();
             this.ActiveControl = imb;
+            BrightnessPercent = 0;
+            SaturationPercent = 0;
+            updateSaturationValueLabel();
+            updateBrightlessValueLabel();
         }
 
         /// <summary>
@@ -202,67 +233,174 @@ namespace GalleryApp
                     {
                         style.SizeType = SizeType.Percent;
                         style.Width = 15;
+                        makeMenuVisible();
                     }
                     else if (style.Width == 15)
                     {
                         style.SizeType = SizeType.Percent;
                         style.Width = 2;
+                        makeMenuTransparent();
                     }
-                }
-                
+                }                
                 i++;
             }
-        }
+            this.ActiveControl = imb;
+        }      
 
-        private void tbBrightness_Scroll(object sender, EventArgs e)
-        {
-            if (!checkBox1.Checked)
-            {
-                int value = 10 * (tbBrightness.Value - 10);
-                if (value > 0)
-                    lbBrightnessValue.Text = "+" + (value).ToString() + "%";
-                else
-                    lbBrightnessValue.Text = (value).ToString() + "%";
-
-                Image<Rgb, Byte> image = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
-                image = image.Mul(1 + (value / 100f));
-                imb.Image = image.Bitmap;
-                imb.ZoomIn(true);
-                imb.ZoomToFit();
-            }
-            else
-            {
-                int value = 10 * (tbBrightness.Value - 10);
-                if (value > 0)
-                    lbBrightnessValue.Text = "+" + (value).ToString() + "%";
-                else
-                    lbBrightnessValue.Text = (value).ToString() + "%";
-
-                Image<Rgb, Byte> image = new Image<Rgb, byte>(new Bitmap(imb.Image));
-                image = image.Mul(1 + (value / 100f));
-                imb.Image = image.Bitmap;
-                imb.ZoomIn(true);
-                imb.ZoomToFit();
-            }
-        }
-        private void HistEq()
+        private Bitmap HistEq()
         {
             Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
             inputImage._EqualizeHist();
-            imb.Image = inputImage.Bitmap;
+            return inputImage.Bitmap;
         }
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+
+        private Bitmap changeBrightness(Bitmap bmp, int value)
         {
-            if (checkBox1.Checked)
+            Image<Rgb, Byte> image = new Image<Rgb, byte>(bmp);
+            Image<Rgb, Byte> addImage = new Image<Rgb, byte>(image.Width, image.Height);
+            
+            if (value < 0)
             {
-                HistEq();
+                addImage.SetValue(new Rgb(-value, -value, -value));
+                image = image.Sub(addImage);
             }
             else
             {
-                Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+                addImage.SetValue(new Rgb(value, value, value));
+                image = image.Add(addImage);
+            }
+                
+            return image.Bitmap;
+        }
+
+        private Bitmap changeSaturation(Bitmap bmp, int value)
+        {
+            Image<Hsv, byte> image = new Image<Hsv, byte>(bmp);
+
+            if (value > 0)
+            {
+                for (int i = 0; i < image.Width; i++)
+                {
+                    for (int j = 0; j < image.Height; j++)
+                    {
+                        if (image.Data[j, i, 1] >= 245)
+                        {
+                            image.Data[j, i, 1] += 255;
+                        }
+                        else if (image.Data[j, i, 1] < 245 && image.Data[j, i, 1] > 20)
+                        {
+                            image.Data[j, i, 1] += (byte)value;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < image.Width; i++)
+                {
+                    for (int j = 0; j < image.Height; j++)
+                    {
+                        if (image.Data[j, i, 1] <= 10)
+                        {
+                            image.Data[j, i, 1] += 0;
+                        }
+                        else
+                        {
+                            image.Data[j, i, 1] += (byte)value;
+                        }
+                    }
+                }
+            }            
+            return image.Bitmap;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbAuto.Checked)
+            {
+                imb.Image = HistEq();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //do something
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do something else
+                }
+                Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));                
                 imb.Image = inputImage.Bitmap;
             }
+            this.ActiveControl = imb;
+        }
 
+        private void bBrightnessMinus_Click(object sender, EventArgs e)
+        {
+            BrightnessPercent -= 10;
+            updateBrightlessValueLabel();
+            Bitmap image = changeBrightness(new Bitmap(imb.Image), -10);
+
+            imb.Image = image;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+            this.ActiveControl = imb;
+        }
+
+        private void bBrightnessPlus_Click(object sender, EventArgs e)
+        {
+            BrightnessPercent += 10;
+            updateBrightlessValueLabel();
+            Bitmap image = changeBrightness(new Bitmap(imb.Image), 10);
+
+            imb.Image = image;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+            this.ActiveControl = imb;
+        }
+
+        private void bSaturationPlus_Click(object sender, EventArgs e)
+        {
+            SaturationPercent += 10;
+            updateSaturationValueLabel();
+            imb.Image = changeSaturation(new Bitmap(imb.Image), 10);
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+            this.ActiveControl = imb;
+        }
+
+        private void bSaturationMinus_Click(object sender, EventArgs e)
+        {
+            SaturationPercent -= 10;
+            updateSaturationValueLabel();
+            imb.Image = changeSaturation(new Bitmap(imb.Image), -10);
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+            this.ActiveControl = imb;
+        }
+
+        private void makeMenuTransparent()
+        {
+            tableLayoutPanel2.Visible = false;
+            this.ActiveControl = imb;
+        }
+
+        private void makeMenuVisible()
+        {
+            tableLayoutPanel2.Visible = true;
+            this.ActiveControl = imb;
+        }
+
+        private void updateBrightlessValueLabel()
+        {
+            lbBrightnessValue.Text = BrightnessPercent.ToString() + " %";
+        }
+
+        private void updateSaturationValueLabel()
+        {
+            lbSaturationValue.Text = SaturationPercent.ToString() + " %";
         }
     }
 }

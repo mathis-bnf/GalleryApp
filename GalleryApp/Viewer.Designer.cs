@@ -39,22 +39,32 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbBrightnessValue = new System.Windows.Forms.Label();
-            this.tbBrightness = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lbSaturationValue = new System.Windows.Forms.Label();
+            this.lbSaturation = new System.Windows.Forms.Label();
+            this.bSaturationMinus = new System.Windows.Forms.Button();
+            this.bSaturationPlus = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lbAutoContrast = new System.Windows.Forms.Label();
+            this.cbAuto = new System.Windows.Forms.CheckBox();
+            this.tlpBrightness = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lbBrightnessValue = new System.Windows.Forms.Label();
+            this.lbBrightness = new System.Windows.Forms.Label();
+            this.bBrightnessMinus = new System.Windows.Forms.Button();
+            this.bBrightnessPlus = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.tlpImageButtons.SuspendLayout();
             this.tlpImage.SuspendLayout();
             this.tlpBackGround.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbBrightness)).BeginInit();
             this.panel2.SuspendLayout();
+            this.tlpBrightness.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -86,13 +96,13 @@
             this.tlpImageButtons.RowCount = 1;
             this.tlpImageButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImageButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tlpImageButtons.Size = new System.Drawing.Size(840, 53);
+            this.tlpImageButtons.Size = new System.Drawing.Size(893, 53);
             this.tlpImageButtons.TabIndex = 1;
             // 
             // bPreviousPhoto
             // 
             this.bPreviousPhoto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bPreviousPhoto.Location = new System.Drawing.Point(100, 14);
+            this.bPreviousPhoto.Location = new System.Drawing.Point(108, 14);
             this.bPreviousPhoto.Name = "bPreviousPhoto";
             this.bPreviousPhoto.Size = new System.Drawing.Size(80, 25);
             this.bPreviousPhoto.TabIndex = 0;
@@ -103,7 +113,7 @@
             // bNextPhoto
             // 
             this.bNextPhoto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bNextPhoto.Location = new System.Drawing.Point(660, 14);
+            this.bNextPhoto.Location = new System.Drawing.Point(703, 14);
             this.bNextPhoto.Name = "bNextPhoto";
             this.bNextPhoto.Size = new System.Drawing.Size(80, 25);
             this.bNextPhoto.TabIndex = 1;
@@ -123,14 +133,14 @@
             this.tlpImage.RowCount = 2;
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
-            this.tlpImage.Size = new System.Drawing.Size(846, 732);
+            this.tlpImage.Size = new System.Drawing.Size(899, 732);
             this.tlpImage.TabIndex = 0;
             // 
             // tlpBackGround
             // 
             this.tlpBackGround.ColumnCount = 2;
-            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98F));
+            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2F));
             this.tlpBackGround.Controls.Add(this.tlpImage, 0, 0);
             this.tlpBackGround.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.tlpBackGround.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -138,22 +148,23 @@
             this.tlpBackGround.Name = "tlpBackGround";
             this.tlpBackGround.RowCount = 1;
             this.tlpBackGround.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpBackGround.Size = new System.Drawing.Size(1065, 738);
+            this.tlpBackGround.Size = new System.Drawing.Size(1292, 738);
             this.tlpBackGround.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(855, 3);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(965, 88);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(207, 732);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(226, 550);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // button1
@@ -166,17 +177,19 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(207, 36);
+            this.button1.Size = new System.Drawing.Size(154, 36);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tlpBrightness, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 39);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -196,91 +209,210 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(201, 690);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.bSaturationMinus, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.bSaturationPlus, 2, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 60);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(195, 51);
+            this.tableLayoutPanel3.TabIndex = 8;
+            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.lbBrightnessValue);
-            this.panel1.Controls.Add(this.tbBrightness);
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.lbSaturationValue);
+            this.panel1.Controls.Add(this.lbSaturation);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(195, 51);
-            this.panel1.TabIndex = 4;
+            this.panel1.Size = new System.Drawing.Size(91, 45);
+            this.panel1.TabIndex = 0;
             // 
-            // lbBrightnessValue
+            // lbSaturationValue
             // 
-            this.lbBrightnessValue.AutoSize = true;
-            this.lbBrightnessValue.ForeColor = System.Drawing.Color.White;
-            this.lbBrightnessValue.Location = new System.Drawing.Point(24, 24);
-            this.lbBrightnessValue.Name = "lbBrightnessValue";
-            this.lbBrightnessValue.Size = new System.Drawing.Size(28, 17);
-            this.lbBrightnessValue.TabIndex = 2;
-            this.lbBrightnessValue.Text = "0%";
-            this.lbBrightnessValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbSaturationValue.AutoSize = true;
+            this.lbSaturationValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbSaturationValue.ForeColor = System.Drawing.Color.White;
+            this.lbSaturationValue.Location = new System.Drawing.Point(29, 25);
+            this.lbSaturationValue.Name = "lbSaturationValue";
+            this.lbSaturationValue.Size = new System.Drawing.Size(41, 25);
+            this.lbSaturationValue.TabIndex = 4;
+            this.lbSaturationValue.Text = "0%";
+            this.lbSaturationValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tbBrightness
+            // lbSaturation
             // 
-            this.tbBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbBrightness.Location = new System.Drawing.Point(74, -5);
-            this.tbBrightness.Margin = new System.Windows.Forms.Padding(0);
-            this.tbBrightness.Maximum = 20;
-            this.tbBrightness.Name = "tbBrightness";
-            this.tbBrightness.Size = new System.Drawing.Size(130, 56);
-            this.tbBrightness.TabIndex = 1;
-            this.tbBrightness.Value = 10;
-            this.tbBrightness.Scroll += new System.EventHandler(this.tbBrightness_Scroll);
+            this.lbSaturation.AutoSize = true;
+            this.lbSaturation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbSaturation.ForeColor = System.Drawing.Color.White;
+            this.lbSaturation.Location = new System.Drawing.Point(8, 3);
+            this.lbSaturation.Margin = new System.Windows.Forms.Padding(0);
+            this.lbSaturation.Name = "lbSaturation";
+            this.lbSaturation.Size = new System.Drawing.Size(85, 20);
+            this.lbSaturation.TabIndex = 3;
+            this.lbSaturation.Text = "Saturation";
             // 
-            // label1
+            // bSaturationMinus
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 2);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Brightness";
+            this.bSaturationMinus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.bSaturationMinus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bSaturationMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSaturationMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bSaturationMinus.ForeColor = System.Drawing.SystemColors.Control;
+            this.bSaturationMinus.Location = new System.Drawing.Point(100, 3);
+            this.bSaturationMinus.Name = "bSaturationMinus";
+            this.bSaturationMinus.Size = new System.Drawing.Size(42, 45);
+            this.bSaturationMinus.TabIndex = 1;
+            this.bSaturationMinus.Text = "-";
+            this.bSaturationMinus.UseVisualStyleBackColor = false;
+            this.bSaturationMinus.Click += new System.EventHandler(this.bSaturationMinus_Click);
             // 
-            // label2
+            // bSaturationPlus
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Auto";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(58, 3);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(18, 17);
-            this.checkBox1.TabIndex = 5;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.bSaturationPlus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.bSaturationPlus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bSaturationPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSaturationPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bSaturationPlus.ForeColor = System.Drawing.SystemColors.Control;
+            this.bSaturationPlus.Location = new System.Drawing.Point(148, 3);
+            this.bSaturationPlus.Name = "bSaturationPlus";
+            this.bSaturationPlus.Size = new System.Drawing.Size(44, 45);
+            this.bSaturationPlus.TabIndex = 2;
+            this.bSaturationPlus.Text = "+";
+            this.bSaturationPlus.UseVisualStyleBackColor = false;
+            this.bSaturationPlus.Click += new System.EventHandler(this.bSaturationPlus_Click);
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.checkBox1);
+            this.panel2.Controls.Add(this.lbAutoContrast);
+            this.panel2.Controls.Add(this.cbAuto);
             this.panel2.Location = new System.Drawing.Point(3, 117);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(195, 51);
             this.panel2.TabIndex = 6;
+            // 
+            // lbAutoContrast
+            // 
+            this.lbAutoContrast.AutoSize = true;
+            this.lbAutoContrast.ForeColor = System.Drawing.Color.White;
+            this.lbAutoContrast.Location = new System.Drawing.Point(11, 17);
+            this.lbAutoContrast.Name = "lbAutoContrast";
+            this.lbAutoContrast.Size = new System.Drawing.Size(94, 17);
+            this.lbAutoContrast.TabIndex = 1;
+            this.lbAutoContrast.Text = "Auto Contrast";
+            // 
+            // cbAuto
+            // 
+            this.cbAuto.AutoSize = true;
+            this.cbAuto.Location = new System.Drawing.Point(137, 17);
+            this.cbAuto.Name = "cbAuto";
+            this.cbAuto.Size = new System.Drawing.Size(18, 17);
+            this.cbAuto.TabIndex = 5;
+            this.cbAuto.UseVisualStyleBackColor = true;
+            this.cbAuto.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // tlpBrightness
+            // 
+            this.tlpBrightness.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tlpBrightness.ColumnCount = 3;
+            this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpBrightness.Controls.Add(this.panel3, 0, 0);
+            this.tlpBrightness.Controls.Add(this.bBrightnessMinus, 1, 0);
+            this.tlpBrightness.Controls.Add(this.bBrightnessPlus, 2, 0);
+            this.tlpBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpBrightness.Location = new System.Drawing.Point(3, 3);
+            this.tlpBrightness.Name = "tlpBrightness";
+            this.tlpBrightness.RowCount = 1;
+            this.tlpBrightness.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpBrightness.Size = new System.Drawing.Size(195, 51);
+            this.tlpBrightness.TabIndex = 7;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lbBrightnessValue);
+            this.panel3.Controls.Add(this.lbBrightness);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(65, 45);
+            this.panel3.TabIndex = 0;
+            // 
+            // lbBrightnessValue
+            // 
+            this.lbBrightnessValue.AutoSize = true;
+            this.lbBrightnessValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbBrightnessValue.ForeColor = System.Drawing.Color.White;
+            this.lbBrightnessValue.Location = new System.Drawing.Point(29, 25);
+            this.lbBrightnessValue.Name = "lbBrightnessValue";
+            this.lbBrightnessValue.Size = new System.Drawing.Size(41, 25);
+            this.lbBrightnessValue.TabIndex = 4;
+            this.lbBrightnessValue.Text = "0%";
+            this.lbBrightnessValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbBrightness
+            // 
+            this.lbBrightness.AutoSize = true;
+            this.lbBrightness.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbBrightness.ForeColor = System.Drawing.Color.White;
+            this.lbBrightness.Location = new System.Drawing.Point(8, 3);
+            this.lbBrightness.Margin = new System.Windows.Forms.Padding(0);
+            this.lbBrightness.Name = "lbBrightness";
+            this.lbBrightness.Size = new System.Drawing.Size(90, 20);
+            this.lbBrightness.TabIndex = 3;
+            this.lbBrightness.Text = "Brightness";
+            // 
+            // bBrightnessMinus
+            // 
+            this.bBrightnessMinus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.bBrightnessMinus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bBrightnessMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bBrightnessMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bBrightnessMinus.ForeColor = System.Drawing.SystemColors.Control;
+            this.bBrightnessMinus.Location = new System.Drawing.Point(74, 3);
+            this.bBrightnessMinus.Name = "bBrightnessMinus";
+            this.bBrightnessMinus.Size = new System.Drawing.Size(29, 45);
+            this.bBrightnessMinus.TabIndex = 1;
+            this.bBrightnessMinus.Text = "-";
+            this.bBrightnessMinus.UseVisualStyleBackColor = false;
+            this.bBrightnessMinus.Click += new System.EventHandler(this.bBrightnessMinus_Click);
+            // 
+            // bBrightnessPlus
+            // 
+            this.bBrightnessPlus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.bBrightnessPlus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bBrightnessPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bBrightnessPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bBrightnessPlus.ForeColor = System.Drawing.SystemColors.Control;
+            this.bBrightnessPlus.Location = new System.Drawing.Point(109, 3);
+            this.bBrightnessPlus.Name = "bBrightnessPlus";
+            this.bBrightnessPlus.Size = new System.Drawing.Size(30, 45);
+            this.bBrightnessPlus.TabIndex = 2;
+            this.bBrightnessPlus.Text = "+";
+            this.bBrightnessPlus.UseVisualStyleBackColor = false;
+            this.bBrightnessPlus.Click += new System.EventHandler(this.bBrightnessPlus_Click);
             // 
             // Viewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.ClientSize = new System.Drawing.Size(1065, 738);
+            this.ClientSize = new System.Drawing.Size(1292, 738);
             this.Controls.Add(this.tlpBackGround);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Viewer";
             this.Text = "GalleryApp - Viewer";
+            this.TransparencyKey = System.Drawing.Color.Black;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.contextMenuStrip1.ResumeLayout(false);
             this.tlpImageButtons.ResumeLayout(false);
@@ -288,11 +420,14 @@
             this.tlpBackGround.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbBrightness)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tlpBrightness.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -308,12 +443,20 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TrackBar tbBrightness;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lbBrightnessValue;
+        private System.Windows.Forms.Label lbAutoContrast;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbAuto;
+        private System.Windows.Forms.TableLayoutPanel tlpBrightness;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label lbBrightnessValue;
+        private System.Windows.Forms.Label lbBrightness;
+        private System.Windows.Forms.Button bBrightnessMinus;
+        private System.Windows.Forms.Button bBrightnessPlus;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lbSaturationValue;
+        private System.Windows.Forms.Label lbSaturation;
+        private System.Windows.Forms.Button bSaturationMinus;
+        private System.Windows.Forms.Button bSaturationPlus;
     }
 }
