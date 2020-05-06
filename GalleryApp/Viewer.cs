@@ -554,5 +554,15 @@ namespace GalleryApp
                     e.Cancel = true;
             }
         }
+
+        private void bRotateLeft_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet");
+        }
+
+        private void bRotateRight_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet");
+        }
     }
 }

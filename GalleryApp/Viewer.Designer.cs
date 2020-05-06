@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Viewer));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tlpImageButtons = new System.Windows.Forms.TableLayoutPanel();
@@ -37,37 +38,42 @@
             this.tlpImage = new System.Windows.Forms.TableLayoutPanel();
             this.tlpBackGround = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.tlpSaturation = new System.Windows.Forms.TableLayoutPanel();
+            this.pSaturation = new System.Windows.Forms.Panel();
             this.lbSaturationValue = new System.Windows.Forms.Label();
             this.lbSaturation = new System.Windows.Forms.Label();
             this.bSaturationMinus = new System.Windows.Forms.Button();
             this.bSaturationPlus = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.lbAutoContrast = new System.Windows.Forms.Label();
             this.cbAuto = new System.Windows.Forms.CheckBox();
             this.tlpBrightness = new System.Windows.Forms.TableLayoutPanel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pBrightness = new System.Windows.Forms.Panel();
             this.lbBrightnessValue = new System.Windows.Forms.Label();
             this.lbBrightness = new System.Windows.Forms.Label();
             this.bBrightnessMinus = new System.Windows.Forms.Button();
             this.bBrightnessPlus = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.bRotateLeft = new System.Windows.Forms.Button();
+            this.bRotateRight = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lbRotate = new System.Windows.Forms.Label();
+            this.tlpAuto = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStrip1.SuspendLayout();
             this.tlpImageButtons.SuspendLayout();
             this.tlpImage.SuspendLayout();
             this.tlpBackGround.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.tlpSaturation.SuspendLayout();
+            this.pSaturation.SuspendLayout();
             this.tlpBrightness.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.pBrightness.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tlpAuto.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -171,30 +177,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(253, 732);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::GalleryApp.Properties.Resources.menuLogo;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(-7, -3);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 36);
-            this.button1.TabIndex = 0;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tlpSaturation, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.tlpBrightness, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.bSave, 0, 11);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.tlpAuto, 0, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 39);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -214,32 +206,32 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(247, 690);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // tableLayoutPanel3
+            // tlpSaturation
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.bSaturationMinus, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.bSaturationPlus, 2, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 60);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(241, 51);
-            this.tableLayoutPanel3.TabIndex = 8;
+            this.tlpSaturation.ColumnCount = 3;
+            this.tlpSaturation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpSaturation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpSaturation.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tlpSaturation.Controls.Add(this.pSaturation, 0, 0);
+            this.tlpSaturation.Controls.Add(this.bSaturationMinus, 1, 0);
+            this.tlpSaturation.Controls.Add(this.bSaturationPlus, 2, 0);
+            this.tlpSaturation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpSaturation.Location = new System.Drawing.Point(3, 60);
+            this.tlpSaturation.Name = "tlpSaturation";
+            this.tlpSaturation.RowCount = 1;
+            this.tlpSaturation.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpSaturation.Size = new System.Drawing.Size(241, 51);
+            this.tlpSaturation.TabIndex = 8;
             // 
-            // panel1
+            // pSaturation
             // 
-            this.panel1.Controls.Add(this.lbSaturationValue);
-            this.panel1.Controls.Add(this.lbSaturation);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(114, 45);
-            this.panel1.TabIndex = 0;
+            this.pSaturation.Controls.Add(this.lbSaturationValue);
+            this.pSaturation.Controls.Add(this.lbSaturation);
+            this.pSaturation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pSaturation.Location = new System.Drawing.Point(3, 3);
+            this.pSaturation.Name = "pSaturation";
+            this.pSaturation.Size = new System.Drawing.Size(114, 45);
+            this.pSaturation.TabIndex = 0;
             // 
             // lbSaturationValue
             // 
@@ -295,31 +287,24 @@
             this.bSaturationPlus.UseVisualStyleBackColor = false;
             this.bSaturationPlus.Click += new System.EventHandler(this.bSaturationPlus_Click);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.lbAutoContrast);
-            this.panel2.Controls.Add(this.cbAuto);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 117);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(241, 51);
-            this.panel2.TabIndex = 6;
-            // 
             // lbAutoContrast
             // 
             this.lbAutoContrast.AutoSize = true;
+            this.lbAutoContrast.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbAutoContrast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbAutoContrast.ForeColor = System.Drawing.Color.White;
-            this.lbAutoContrast.Location = new System.Drawing.Point(5, 15);
+            this.lbAutoContrast.Location = new System.Drawing.Point(3, 0);
             this.lbAutoContrast.Name = "lbAutoContrast";
-            this.lbAutoContrast.Size = new System.Drawing.Size(112, 20);
+            this.lbAutoContrast.Size = new System.Drawing.Size(114, 51);
             this.lbAutoContrast.TabIndex = 1;
             this.lbAutoContrast.Text = "Auto Contrast";
+            this.lbAutoContrast.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cbAuto
             // 
+            this.cbAuto.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cbAuto.AutoSize = true;
-            this.cbAuto.Location = new System.Drawing.Point(173, 18);
+            this.cbAuto.Location = new System.Drawing.Point(171, 17);
             this.cbAuto.Name = "cbAuto";
             this.cbAuto.Size = new System.Drawing.Size(18, 17);
             this.cbAuto.TabIndex = 5;
@@ -333,7 +318,7 @@
             this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tlpBrightness.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tlpBrightness.Controls.Add(this.panel3, 0, 0);
+            this.tlpBrightness.Controls.Add(this.pBrightness, 0, 0);
             this.tlpBrightness.Controls.Add(this.bBrightnessMinus, 1, 0);
             this.tlpBrightness.Controls.Add(this.bBrightnessPlus, 2, 0);
             this.tlpBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -344,15 +329,15 @@
             this.tlpBrightness.Size = new System.Drawing.Size(241, 51);
             this.tlpBrightness.TabIndex = 7;
             // 
-            // panel3
+            // pBrightness
             // 
-            this.panel3.Controls.Add(this.lbBrightnessValue);
-            this.panel3.Controls.Add(this.lbBrightness);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(114, 45);
-            this.panel3.TabIndex = 0;
+            this.pBrightness.Controls.Add(this.lbBrightnessValue);
+            this.pBrightness.Controls.Add(this.lbBrightness);
+            this.pBrightness.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pBrightness.Location = new System.Drawing.Point(3, 3);
+            this.pBrightness.Name = "pBrightness";
+            this.pBrightness.Size = new System.Drawing.Size(114, 45);
+            this.pBrightness.TabIndex = 0;
             // 
             // lbBrightnessValue
             // 
@@ -432,6 +417,92 @@
             this.panel4.Size = new System.Drawing.Size(247, 30);
             this.panel4.TabIndex = 10;
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 3;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel4.Controls.Add(this.bRotateLeft, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.bRotateRight, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.lbRotate, 0, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 174);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(241, 51);
+            this.tableLayoutPanel4.TabIndex = 10;
+            // 
+            // bRotateLeft
+            // 
+            this.bRotateLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bRotateLeft.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bRotateLeft.Image = global::GalleryApp.Properties.Resources.rotateLeft;
+            this.bRotateLeft.Location = new System.Drawing.Point(123, 3);
+            this.bRotateLeft.Name = "bRotateLeft";
+            this.bRotateLeft.Size = new System.Drawing.Size(54, 45);
+            this.bRotateLeft.TabIndex = 0;
+            this.bRotateLeft.UseVisualStyleBackColor = true;
+            this.bRotateLeft.Click += new System.EventHandler(this.bRotateLeft_Click);
+            // 
+            // bRotateRight
+            // 
+            this.bRotateRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bRotateRight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bRotateRight.Image = global::GalleryApp.Properties.Resources.rotateRight;
+            this.bRotateRight.Location = new System.Drawing.Point(183, 3);
+            this.bRotateRight.Name = "bRotateRight";
+            this.bRotateRight.Size = new System.Drawing.Size(55, 45);
+            this.bRotateRight.TabIndex = 1;
+            this.bRotateRight.UseVisualStyleBackColor = true;
+            this.bRotateRight.Click += new System.EventHandler(this.bRotateRight_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(-7, -3);
+            this.button1.Margin = new System.Windows.Forms.Padding(0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(37, 36);
+            this.button1.TabIndex = 0;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbRotate
+            // 
+            this.lbRotate.AutoSize = true;
+            this.lbRotate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbRotate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbRotate.ForeColor = System.Drawing.Color.White;
+            this.lbRotate.Location = new System.Drawing.Point(3, 0);
+            this.lbRotate.Name = "lbRotate";
+            this.lbRotate.Size = new System.Drawing.Size(114, 51);
+            this.lbRotate.TabIndex = 2;
+            this.lbRotate.Text = "Rotate";
+            this.lbRotate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tlpAuto
+            // 
+            this.tlpAuto.ColumnCount = 2;
+            this.tlpAuto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpAuto.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpAuto.Controls.Add(this.lbAutoContrast, 0, 0);
+            this.tlpAuto.Controls.Add(this.cbAuto, 1, 0);
+            this.tlpAuto.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tlpAuto.Location = new System.Drawing.Point(3, 117);
+            this.tlpAuto.Name = "tlpAuto";
+            this.tlpAuto.RowCount = 1;
+            this.tlpAuto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpAuto.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpAuto.Size = new System.Drawing.Size(241, 51);
+            this.tlpAuto.TabIndex = 11;
+            // 
             // Viewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -452,15 +523,17 @@
             this.tlpBackGround.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.tlpSaturation.ResumeLayout(false);
+            this.pSaturation.ResumeLayout(false);
+            this.pSaturation.PerformLayout();
             this.tlpBrightness.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
+            this.pBrightness.ResumeLayout(false);
+            this.pBrightness.PerformLayout();
             this.panel4.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
+            this.tlpAuto.ResumeLayout(false);
+            this.tlpAuto.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -477,21 +550,25 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lbAutoContrast;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox cbAuto;
         private System.Windows.Forms.TableLayoutPanel tlpBrightness;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel pBrightness;
         private System.Windows.Forms.Label lbBrightnessValue;
         private System.Windows.Forms.Label lbBrightness;
         private System.Windows.Forms.Button bBrightnessMinus;
         private System.Windows.Forms.Button bBrightnessPlus;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tlpSaturation;
+        private System.Windows.Forms.Panel pSaturation;
         private System.Windows.Forms.Label lbSaturationValue;
         private System.Windows.Forms.Label lbSaturation;
         private System.Windows.Forms.Button bSaturationMinus;
         private System.Windows.Forms.Button bSaturationPlus;
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button bRotateLeft;
+        private System.Windows.Forms.Button bRotateRight;
+        private System.Windows.Forms.Label lbRotate;
+        private System.Windows.Forms.TableLayoutPanel tlpAuto;
     }
 }
