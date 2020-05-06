@@ -54,6 +54,8 @@
             this.lbBrightness = new System.Windows.Forms.Label();
             this.bBrightnessMinus = new System.Windows.Forms.Button();
             this.bBrightnessPlus = new System.Windows.Forms.Button();
+            this.bSave = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.contextMenuStrip1.SuspendLayout();
             this.tlpImageButtons.SuspendLayout();
             this.tlpImage.SuspendLayout();
@@ -65,6 +67,7 @@
             this.panel2.SuspendLayout();
             this.tlpBrightness.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -96,13 +99,13 @@
             this.tlpImageButtons.RowCount = 1;
             this.tlpImageButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpImageButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
-            this.tlpImageButtons.Size = new System.Drawing.Size(893, 53);
+            this.tlpImageButtons.Size = new System.Drawing.Size(1021, 53);
             this.tlpImageButtons.TabIndex = 1;
             // 
             // bPreviousPhoto
             // 
             this.bPreviousPhoto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bPreviousPhoto.Location = new System.Drawing.Point(108, 14);
+            this.bPreviousPhoto.Location = new System.Drawing.Point(130, 14);
             this.bPreviousPhoto.Name = "bPreviousPhoto";
             this.bPreviousPhoto.Size = new System.Drawing.Size(80, 25);
             this.bPreviousPhoto.TabIndex = 0;
@@ -113,7 +116,7 @@
             // bNextPhoto
             // 
             this.bNextPhoto.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bNextPhoto.Location = new System.Drawing.Point(703, 14);
+            this.bNextPhoto.Location = new System.Drawing.Point(810, 14);
             this.bNextPhoto.Name = "bNextPhoto";
             this.bNextPhoto.Size = new System.Drawing.Size(80, 25);
             this.bNextPhoto.TabIndex = 1;
@@ -133,14 +136,15 @@
             this.tlpImage.RowCount = 2;
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92F));
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8F));
-            this.tlpImage.Size = new System.Drawing.Size(899, 732);
+            this.tlpImage.Size = new System.Drawing.Size(1027, 732);
             this.tlpImage.TabIndex = 0;
             // 
             // tlpBackGround
             // 
+            this.tlpBackGround.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tlpBackGround.ColumnCount = 2;
-            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98F));
-            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2F));
+            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tlpBackGround.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tlpBackGround.Controls.Add(this.tlpImage, 0, 0);
             this.tlpBackGround.Controls.Add(this.tableLayoutPanel1, 1, 0);
             this.tlpBackGround.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -156,28 +160,28 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(965, 88);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(1036, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(226, 550);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(253, 732);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::GalleryApp.Properties.Resources.menu26;
+            this.button1.Image = global::GalleryApp.Properties.Resources.menuLogo;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Location = new System.Drawing.Point(-7, -3);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(154, 36);
+            this.button1.Size = new System.Drawing.Size(37, 36);
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -190,6 +194,7 @@
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.tlpBrightness, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.bSave, 0, 11);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 39);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -206,7 +211,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.327084F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.327084F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.327084F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(201, 690);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(247, 690);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -223,7 +228,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(195, 51);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(241, 51);
             this.tableLayoutPanel3.TabIndex = 8;
             // 
             // panel1
@@ -233,7 +238,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(91, 45);
+            this.panel1.Size = new System.Drawing.Size(114, 45);
             this.panel1.TabIndex = 0;
             // 
             // lbSaturationValue
@@ -267,9 +272,9 @@
             this.bSaturationMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSaturationMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bSaturationMinus.ForeColor = System.Drawing.SystemColors.Control;
-            this.bSaturationMinus.Location = new System.Drawing.Point(100, 3);
+            this.bSaturationMinus.Location = new System.Drawing.Point(123, 3);
             this.bSaturationMinus.Name = "bSaturationMinus";
-            this.bSaturationMinus.Size = new System.Drawing.Size(42, 45);
+            this.bSaturationMinus.Size = new System.Drawing.Size(54, 45);
             this.bSaturationMinus.TabIndex = 1;
             this.bSaturationMinus.Text = "-";
             this.bSaturationMinus.UseVisualStyleBackColor = false;
@@ -282,9 +287,9 @@
             this.bSaturationPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSaturationPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bSaturationPlus.ForeColor = System.Drawing.SystemColors.Control;
-            this.bSaturationPlus.Location = new System.Drawing.Point(148, 3);
+            this.bSaturationPlus.Location = new System.Drawing.Point(183, 3);
             this.bSaturationPlus.Name = "bSaturationPlus";
-            this.bSaturationPlus.Size = new System.Drawing.Size(44, 45);
+            this.bSaturationPlus.Size = new System.Drawing.Size(55, 45);
             this.bSaturationPlus.TabIndex = 2;
             this.bSaturationPlus.Text = "+";
             this.bSaturationPlus.UseVisualStyleBackColor = false;
@@ -294,25 +299,27 @@
             // 
             this.panel2.Controls.Add(this.lbAutoContrast);
             this.panel2.Controls.Add(this.cbAuto);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 117);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(195, 51);
+            this.panel2.Size = new System.Drawing.Size(241, 51);
             this.panel2.TabIndex = 6;
             // 
             // lbAutoContrast
             // 
             this.lbAutoContrast.AutoSize = true;
+            this.lbAutoContrast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbAutoContrast.ForeColor = System.Drawing.Color.White;
-            this.lbAutoContrast.Location = new System.Drawing.Point(11, 17);
+            this.lbAutoContrast.Location = new System.Drawing.Point(5, 15);
             this.lbAutoContrast.Name = "lbAutoContrast";
-            this.lbAutoContrast.Size = new System.Drawing.Size(94, 17);
+            this.lbAutoContrast.Size = new System.Drawing.Size(112, 20);
             this.lbAutoContrast.TabIndex = 1;
             this.lbAutoContrast.Text = "Auto Contrast";
             // 
             // cbAuto
             // 
             this.cbAuto.AutoSize = true;
-            this.cbAuto.Location = new System.Drawing.Point(137, 17);
+            this.cbAuto.Location = new System.Drawing.Point(173, 18);
             this.cbAuto.Name = "cbAuto";
             this.cbAuto.Size = new System.Drawing.Size(18, 17);
             this.cbAuto.TabIndex = 5;
@@ -334,7 +341,7 @@
             this.tlpBrightness.Name = "tlpBrightness";
             this.tlpBrightness.RowCount = 1;
             this.tlpBrightness.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpBrightness.Size = new System.Drawing.Size(195, 51);
+            this.tlpBrightness.Size = new System.Drawing.Size(241, 51);
             this.tlpBrightness.TabIndex = 7;
             // 
             // panel3
@@ -344,7 +351,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(65, 45);
+            this.panel3.Size = new System.Drawing.Size(114, 45);
             this.panel3.TabIndex = 0;
             // 
             // lbBrightnessValue
@@ -378,9 +385,9 @@
             this.bBrightnessMinus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bBrightnessMinus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bBrightnessMinus.ForeColor = System.Drawing.SystemColors.Control;
-            this.bBrightnessMinus.Location = new System.Drawing.Point(74, 3);
+            this.bBrightnessMinus.Location = new System.Drawing.Point(123, 3);
             this.bBrightnessMinus.Name = "bBrightnessMinus";
-            this.bBrightnessMinus.Size = new System.Drawing.Size(29, 45);
+            this.bBrightnessMinus.Size = new System.Drawing.Size(54, 45);
             this.bBrightnessMinus.TabIndex = 1;
             this.bBrightnessMinus.Text = "-";
             this.bBrightnessMinus.UseVisualStyleBackColor = false;
@@ -393,13 +400,37 @@
             this.bBrightnessPlus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bBrightnessPlus.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bBrightnessPlus.ForeColor = System.Drawing.SystemColors.Control;
-            this.bBrightnessPlus.Location = new System.Drawing.Point(109, 3);
+            this.bBrightnessPlus.Location = new System.Drawing.Point(183, 3);
             this.bBrightnessPlus.Name = "bBrightnessPlus";
-            this.bBrightnessPlus.Size = new System.Drawing.Size(30, 45);
+            this.bBrightnessPlus.Size = new System.Drawing.Size(55, 45);
             this.bBrightnessPlus.TabIndex = 2;
             this.bBrightnessPlus.Text = "+";
             this.bBrightnessPlus.UseVisualStyleBackColor = false;
             this.bBrightnessPlus.Click += new System.EventHandler(this.bBrightnessPlus_Click);
+            // 
+            // bSave
+            // 
+            this.bSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bSave.ForeColor = System.Drawing.SystemColors.Control;
+            this.bSave.Location = new System.Drawing.Point(3, 630);
+            this.bSave.Name = "bSave";
+            this.bSave.Size = new System.Drawing.Size(241, 57);
+            this.bSave.TabIndex = 9;
+            this.bSave.Text = "Save changes";
+            this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.panel4.Controls.Add(this.button1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(247, 30);
+            this.panel4.TabIndex = 10;
             // 
             // Viewer
             // 
@@ -412,8 +443,9 @@
             this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Viewer";
             this.Text = "GalleryApp - Viewer";
-            this.TransparencyKey = System.Drawing.Color.Black;
+            this.TransparencyKey = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Viewer_FormClosing);
             this.contextMenuStrip1.ResumeLayout(false);
             this.tlpImageButtons.ResumeLayout(false);
             this.tlpImage.ResumeLayout(false);
@@ -428,6 +460,7 @@
             this.tlpBrightness.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -458,5 +491,7 @@
         private System.Windows.Forms.Label lbSaturation;
         private System.Windows.Forms.Button bSaturationMinus;
         private System.Windows.Forms.Button bSaturationPlus;
+        private System.Windows.Forms.Button bSave;
+        private System.Windows.Forms.Panel panel4;
     }
 }

@@ -54,9 +54,9 @@ namespace GalleryApp
             searchForNewPhotos();       
         }
 
-        private void searchForNewPhotos()
+        public void searchForNewPhotos()
         {
-            TreeNodeCollection years = treeView1.Nodes;
+            TreeNodeCollection years = tvFolders.Nodes;
             foreach (TreeNode year in years)
             {
                 TreeNodeCollection folders = year.Nodes;
@@ -78,12 +78,12 @@ namespace GalleryApp
         /// </summary>
         public void updateTreeViewNodes()
         {
-            treeView1.Nodes.Clear();
+            tvFolders.Nodes.Clear();
             Dictionary<int, int> dic = new Dictionary<int, int>();
             List<YearFolder> years = SQLRequests.selectAllFromYearFolder();
             for (int i = 0; i < years.Count; i++)
             {
-                treeView1.Nodes.Add(String.Format("{0}", years[i].Year));
+                tvFolders.Nodes.Add(String.Format("{0}", years[i].Year));
                 dic.Add(i, (int)years[i].Year);
 
                 string path = @".\Cache\" + years[i].Year;
@@ -108,7 +108,7 @@ namespace GalleryApp
                             if ((int)readerFolders["Year"] == dic[ind])
                             {
                                 names.Add(String.Format("{0}", readerFolders["Name"]));
-                                treeView1.Nodes[ind].Nodes.Add(String.Format("{0}", names[count]));
+                                tvFolders.Nodes[ind].Nodes.Add(String.Format("{0}", names[count]));
 
 
                                 string path = @".\Cache\" + dic[ind] + @"\" + names[count];
@@ -155,18 +155,18 @@ namespace GalleryApp
         /// <summary>
         /// Displays all images in ListView from TreeView selected folder
         /// </summary>
-        private void displayImages()
+        public void displayImages()
         {
-            imageList1.Images.Clear();
-            listView1.Clear();
+            imageList.Images.Clear();
+            lvImages.Clear();
             List<Photos> files = new List<Photos>();
-            files = SQLRequests.selectImagesFromFolder(treeView1.SelectedNode.Text, Int32.Parse(treeView1.SelectedNode.Parent.Text));
+            files = SQLRequests.selectImagesFromFolder(tvFolders.SelectedNode.Text, Int32.Parse(tvFolders.SelectedNode.Parent.Text));
             Size s = new Size(100, 75);
             byte[] bytes = { };
             MemoryStream ms;
             for (int indPhoto = 0; indPhoto < files.Count; indPhoto++)
             {
-                string path = @".\Cache\" + treeView1.SelectedNode.Parent.Text + @"\" + treeView1.SelectedNode.Text + @"\";
+                string path = @".\Cache\" + tvFolders.SelectedNode.Parent.Text + @"\" + tvFolders.SelectedNode.Text + @"\";
                 if (String.IsNullOrEmpty(files[indPhoto].Alias))
                 {
                     if (File.Exists(files[indPhoto].FullPath))
@@ -190,8 +190,8 @@ namespace GalleryApp
 
                         Icon ic = Icon.FromHandle(png.GetHicon());
 
-                        imageList1.Images.Add(ic);
-                        listView1.Items.Add(fileInfo.Name, indPhoto);
+                        imageList.Images.Add(ic);
+                        lvImages.Items.Add(fileInfo.Name, indPhoto);
                         if (bgw1.IsBusy)
                             bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
 
@@ -216,13 +216,12 @@ namespace GalleryApp
 
                     Icon ic = Icon.FromHandle(img.GetHicon());
 
-                    imageList1.Images.Add(ic);
-                    listView1.Items.Add(fileInfo.Name, indPhoto);
+                    imageList.Images.Add(ic);
+                    lvImages.Items.Add(fileInfo.Name, indPhoto);
                     if (bgw1.IsBusy)
                         bgw1.ReportProgress(100 * (indPhoto + 1) / files.Count);
                 }
             }
-
         }
 
         /// <summary>
@@ -230,9 +229,9 @@ namespace GalleryApp
         /// </summary>
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            Viewer viewer = new Viewer();
-            viewer.Photo = SQLRequests.selectOneImage(treeView1.SelectedNode.Text, listView1.SelectedItems[0].Text);
-            viewer.PhotoList = SQLRequests.selectImagesFromFolder(treeView1.SelectedNode.Text, Int32.Parse(treeView1.SelectedNode.Parent.Text));
+            Viewer viewer = new Viewer(this);
+            viewer.Photo = SQLRequests.selectOneImage(tvFolders.SelectedNode.Text, lvImages.SelectedItems[0].Text);
+            viewer.PhotoList = SQLRequests.selectImagesFromFolder(tvFolders.SelectedNode.Text, Int32.Parse(tvFolders.SelectedNode.Parent.Text));
             viewer.initializePictureBoxImage();
             viewer.Show();
             viewer.Focus();
@@ -284,20 +283,20 @@ namespace GalleryApp
         /// </summary>
         private void albumDeletion()
         {
-            if (treeView1.Nodes.Count > 0)
+            if (tvFolders.Nodes.Count > 0)
             {
-                if (treeView1.SelectedNode != null && treeView1.SelectedNode.Parent != null)
+                if (tvFolders.SelectedNode != null && tvFolders.SelectedNode.Parent != null)
                 {
-                    if (SQLRequests.isFolderExisting(treeView1.SelectedNode.Text, Int32.Parse(treeView1.SelectedNode.Parent.Text)))
+                    if (SQLRequests.isFolderExisting(tvFolders.SelectedNode.Text, Int32.Parse(tvFolders.SelectedNode.Parent.Text)))
                     {
                         DialogResult dialogResult = MessageBox.Show("Do you really want to delete this album ?", "Album delete", MessageBoxButtons.YesNo);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            int res = SQLRequests.deleteFolder(treeView1.SelectedNode.Text, Int32.Parse(treeView1.SelectedNode.Parent.Text));
-                            Directory.Delete(@".\Cache\" + treeView1.SelectedNode.Parent.Text + @"\" + treeView1.SelectedNode.Text, true);
+                            int res = SQLRequests.deleteFolder(tvFolders.SelectedNode.Text, Int32.Parse(tvFolders.SelectedNode.Parent.Text));
+                            Directory.Delete(@".\Cache\" + tvFolders.SelectedNode.Parent.Text + @"\" + tvFolders.SelectedNode.Text, true);
                             updateTreeViewNodes();
-                            imageList1.Images.Clear();
-                            listView1.Clear();
+                            imageList.Images.Clear();
+                            lvImages.Clear();
                         }
                     }
                     else

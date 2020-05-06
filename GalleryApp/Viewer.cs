@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace GalleryApp
 {
@@ -15,6 +17,8 @@ namespace GalleryApp
         private Cyotek.Windows.Forms.ImageBox imb = new Cyotek.Windows.Forms.ImageBox();
         private int brightnessPercent = 0;
         private int saturationPercent = 0;
+        private bool saved = true;
+        private MainWindow parentMainWindow;
 
         internal Photos Photo
         {
@@ -67,9 +71,36 @@ namespace GalleryApp
                 saturationPercent = value;
             }
         }
-        
-        public Viewer()
+
+        internal bool Saved
         {
+            get
+            {
+                return saved;
+            }
+
+            set
+            {
+                saved = value;
+            }
+        }
+
+        internal MainWindow ParentMainWindow
+        {
+            get
+            {
+                return parentMainWindow;
+            }
+
+            set
+            {
+                parentMainWindow = value;
+            }
+        }
+
+        public Viewer(MainWindow parent)
+        {
+            ParentMainWindow = parent;
             InitializeComponent();
             tlpImage.Controls.Add(imb);
             imb.Dock = DockStyle.Fill;
@@ -79,11 +110,22 @@ namespace GalleryApp
             imb.BorderStyle = BorderStyle.FixedSingle;
             imb.SizeMode = Cyotek.Windows.Forms.ImageBoxSizeMode.Fit;
             imb.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.imb_PreviewKeyDown);
-            imb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseClick);
-            makeMenuTransparent();
+            imb.MouseClick += new System.Windows.Forms.MouseEventHandler(this.imb_MouseClick);
+            TableLayoutColumnStyleCollection styles = tlpBackGround.ColumnStyles;
+            int i = 0;
+            foreach (ColumnStyle style in styles)
+            {
+                if (i == 1)
+                {
+                    style.SizeType = SizeType.Percent;
+                    style.Width = 2;
+                    makeMenuTransparent();
+                }
+                i++;
+            }
         }
 
-        private void treeView1_MouseClick(object sender, MouseEventArgs e)
+        private void imb_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -137,20 +179,7 @@ namespace GalleryApp
         /// </summary>
         private void bPreviousPhoto_Click(object sender, EventArgs e)
         {
-            if (imageIndex > 0)
-            {
-                imageIndex--;
-            }
-            else
-            {
-                imageIndex = photoList.Count - 1;
-            }
-            this.setPictureBoxImage();
-            this.ActiveControl = imb;
-            BrightnessPercent = 0;
-            SaturationPercent = 0;
-            updateSaturationValueLabel();
-            updateBrightlessValueLabel();
+            previousPhoto();
         }
 
         /// <summary>
@@ -158,20 +187,7 @@ namespace GalleryApp
         /// </summary>
         private void bNextPhoto_Click(object sender, EventArgs e)
         {
-            if (imageIndex < photoList.Count - 1)
-            {
-                imageIndex++;
-            }
-            else
-            {
-                imageIndex = 0;
-            }
-            this.setPictureBoxImage();
-            this.ActiveControl = imb;
-            BrightnessPercent = 0;
-            SaturationPercent = 0;
-            updateSaturationValueLabel();
-            updateBrightlessValueLabel();
+            nextPhoto();                      
         }
 
         /// <summary>
@@ -183,34 +199,102 @@ namespace GalleryApp
             {
                 case Keys.Right:
                     {
-                        if (imageIndex < photoList.Count - 1)
-                        {
-                            imageIndex++;
-                        }
-                        else
-                        {
-                            imageIndex = 0;
-                        }
-                        setPictureBoxImage();
+                        nextPhoto();
                     }
                     break;
 
                 case Keys.Left:
                     {
-                        if (imageIndex > 0)
-                        {
-                            imageIndex--;
-                        }
-                        else
-                        {
-                            imageIndex = photoList.Count - 1;
-                        }
-                        setPictureBoxImage();
+                        previousPhoto();
                     }
                     break;
 
                 default:
                     break;
+            }
+        }
+
+        private void nextPhoto()
+        {
+            if (BrightnessPercent != 0 || SaturationPercent != 0 || cbAuto.Checked)
+            {
+                DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (imageIndex < photoList.Count - 1)
+                    {
+                        imageIndex++;
+                    }
+                    else
+                    {
+                        imageIndex = 0;
+                    }
+                    this.setPictureBoxImage();
+                    this.ActiveControl = imb;
+                    BrightnessPercent = 0;
+                    SaturationPercent = 0;
+                    updateSaturationValueLabel();
+                    updateBrightlessValueLabel();
+                }
+            }
+            else
+            {
+                if (imageIndex < photoList.Count - 1)
+                {
+                    imageIndex++;
+                }
+                else
+                {
+                    imageIndex = 0;
+                }
+                this.setPictureBoxImage();
+                this.ActiveControl = imb;
+                BrightnessPercent = 0;
+                SaturationPercent = 0;
+                updateSaturationValueLabel();
+                updateBrightlessValueLabel();
+            }
+        }
+
+        private void previousPhoto()
+        {
+            if (BrightnessPercent != 0 || SaturationPercent != 0 || cbAuto.Checked)
+            {
+                DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    if (imageIndex > 0)
+                    {
+                        imageIndex--;
+                    }
+                    else
+                    {
+                        imageIndex = photoList.Count - 1;
+                    }
+                    this.setPictureBoxImage();
+                    this.ActiveControl = imb;
+                    BrightnessPercent = 0;
+                    SaturationPercent = 0;
+                    updateSaturationValueLabel();
+                    updateBrightlessValueLabel();
+                }
+            }
+            else
+            {
+                if (imageIndex < photoList.Count - 1)
+                {
+                    imageIndex++;
+                }
+                else
+                {
+                    imageIndex = 0;
+                }
+                this.setPictureBoxImage();
+                this.ActiveControl = imb;
+                BrightnessPercent = 0;
+                SaturationPercent = 0;
+                updateSaturationValueLabel();
+                updateBrightlessValueLabel();
             }
         }
 
@@ -249,32 +333,37 @@ namespace GalleryApp
 
         private Bitmap HistEq()
         {
+            this.Cursor = Cursors.WaitCursor;
             Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
             inputImage._EqualizeHist();
+            this.Cursor = Cursors.Default;
+            Saved = false;
             return inputImage.Bitmap;
         }
 
         private Bitmap changeBrightness(Bitmap bmp, int value)
         {
-            Image<Rgb, Byte> image = new Image<Rgb, byte>(bmp);
-            Image<Rgb, Byte> addImage = new Image<Rgb, byte>(image.Width, image.Height);
+            this.Cursor = Cursors.WaitCursor;
+            Image<Rgba, Byte> image = new Image<Rgba, byte>(bmp);
+            Image<Rgba, Byte> addImage = new Image<Rgba, byte>(image.Width, image.Height);
             
             if (value < 0)
             {
-                addImage.SetValue(new Rgb(-value, -value, -value));
+                addImage.SetValue(new Rgba(-value, -value, -value, 0));
                 image = image.Sub(addImage);
             }
             else
             {
-                addImage.SetValue(new Rgb(value, value, value));
+                addImage.SetValue(new Rgba(value, value, value, 0));
                 image = image.Add(addImage);
             }
-                
+            this.Cursor = Cursors.Default;
             return image.Bitmap;
         }
 
         private Bitmap changeSaturation(Bitmap bmp, int value)
         {
+            this.Cursor = Cursors.WaitCursor;
             Image<Hsv, byte> image = new Image<Hsv, byte>(bmp);
 
             if (value > 0)
@@ -310,7 +399,8 @@ namespace GalleryApp
                         }
                     }
                 }
-            }            
+            }
+            this.Cursor = Cursors.Default;
             return image.Bitmap;
         }
 
@@ -325,14 +415,9 @@ namespace GalleryApp
                 DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    //do something
+                    Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+                    imb.Image = inputImage.Bitmap;
                 }
-                else if (dialogResult == DialogResult.No)
-                {
-                    //do something else
-                }
-                Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));                
-                imb.Image = inputImage.Bitmap;
             }
             this.ActiveControl = imb;
         }
@@ -347,6 +432,7 @@ namespace GalleryApp
             imb.ZoomIn(true);
             imb.ZoomToFit();
             this.ActiveControl = imb;
+            Saved = false;
         }
 
         private void bBrightnessPlus_Click(object sender, EventArgs e)
@@ -359,6 +445,7 @@ namespace GalleryApp
             imb.ZoomIn(true);
             imb.ZoomToFit();
             this.ActiveControl = imb;
+            Saved = false;
         }
 
         private void bSaturationPlus_Click(object sender, EventArgs e)
@@ -369,6 +456,7 @@ namespace GalleryApp
             imb.ZoomIn(true);
             imb.ZoomToFit();
             this.ActiveControl = imb;
+            Saved = false;
         }
 
         private void bSaturationMinus_Click(object sender, EventArgs e)
@@ -379,6 +467,7 @@ namespace GalleryApp
             imb.ZoomIn(true);
             imb.ZoomToFit();
             this.ActiveControl = imb;
+            Saved = false;
         }
 
         private void makeMenuTransparent()
@@ -401,6 +490,69 @@ namespace GalleryApp
         private void updateSaturationValueLabel()
         {
             lbSaturationValue.Text = SaturationPercent.ToString() + " %";
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            if(Saved == false)
+            {
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.InitialDirectory = photo.Folder;
+                    sfd.Filter = "jpg files (*.jpg)|*.jpg|jpeg files (*.jpeg)|*.jpeg|png files (*.png)|*.png|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+                    sfd.ShowDialog();
+                    if (!String.IsNullOrEmpty(sfd.FileName))
+                    {
+                        Bitmap bmp = new Bitmap(imb.Image);
+                        try
+                        {
+                            FileInfo fi = new FileInfo(sfd.FileName);
+                            ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+                                 
+                            System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+                            EncoderParameters myEncoderParameters = new EncoderParameters(1);
+
+                            EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 70L);
+                            myEncoderParameters.Param[0] = myEncoderParameter;
+                            bmp.Save(fi.FullName, jpgEncoder, myEncoderParameters);
+                            Saved = true;
+                            ParentMainWindow.searchForNewPhotos();
+                            ParentMainWindow.displayImages();
+                        }
+                        catch(Exception excep)
+                        {
+                            MessageBox.Show("Impossible to save : " + excep.ToString());
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                MessageBox.Show("No changes, no need to save");
+            }
+        }
+
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        private void Viewer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!Saved)
+            {
+                DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.No)
+                    e.Cancel = true;
+            }
         }
     }
 }

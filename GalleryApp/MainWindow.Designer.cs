@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.lvImages = new System.Windows.Forms.ListView();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.bChargeDB = new System.Windows.Forms.Button();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tvFolders = new System.Windows.Forms.TreeView();
             this.bDeleteAlbum = new System.Windows.Forms.Button();
             this.bNewAlbum = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -41,24 +41,24 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // listView1
+            // lvImages
             // 
-            this.listView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.ForeColor = System.Drawing.SystemColors.Window;
-            this.listView1.LargeImageList = this.imageList1;
-            this.listView1.Location = new System.Drawing.Point(383, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1516, 1027);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
+            this.lvImages.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.lvImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvImages.ForeColor = System.Drawing.SystemColors.Window;
+            this.lvImages.LargeImageList = this.imageList;
+            this.lvImages.Location = new System.Drawing.Point(383, 3);
+            this.lvImages.Name = "lvImages";
+            this.lvImages.Size = new System.Drawing.Size(1516, 1027);
+            this.lvImages.TabIndex = 1;
+            this.lvImages.UseCompatibleStateImageBehavior = false;
+            this.lvImages.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
-            // imageList1
+            // imageList
             // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(100, 75);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageList.ImageSize = new System.Drawing.Size(100, 75);
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // tableLayoutPanel1
             // 
@@ -67,7 +67,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.bChargeDB, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tvFolders, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.bDeleteAlbum, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.bNewAlbum, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -92,16 +92,16 @@
             this.bChargeDB.UseVisualStyleBackColor = true;
             this.bChargeDB.Click += new System.EventHandler(this.bChargeDB_Click);
             // 
-            // treeView1
+            // tvFolders
             // 
-            this.treeView1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ForeColor = System.Drawing.SystemColors.Window;
-            this.treeView1.Location = new System.Drawing.Point(3, 156);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(368, 868);
-            this.treeView1.TabIndex = 2;
-            this.treeView1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDoubleClick);
+            this.tvFolders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.tvFolders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvFolders.ForeColor = System.Drawing.SystemColors.Window;
+            this.tvFolders.Location = new System.Drawing.Point(3, 156);
+            this.tvFolders.Name = "tvFolders";
+            this.tvFolders.Size = new System.Drawing.Size(368, 868);
+            this.tvFolders.TabIndex = 2;
+            this.tvFolders.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDoubleClick);
             // 
             // bDeleteAlbum
             // 
@@ -131,7 +131,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel1, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.listView1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.lvImages, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -163,13 +163,13 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lvImages;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button bChargeDB;
         private System.Windows.Forms.Button bNewAlbum;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tvFolders;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Button bDeleteAlbum;
     }
 }

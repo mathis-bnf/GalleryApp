@@ -63,9 +63,9 @@ namespace GalleryApp.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap menu26 {
+        internal static System.Drawing.Bitmap menuLogo {
             get {
-                object obj = ResourceManager.GetObject("menu26", resourceCulture);
+                object obj = ResourceManager.GetObject("menuLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
