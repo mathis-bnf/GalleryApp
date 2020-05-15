@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GalleryApp
@@ -51,7 +52,8 @@ namespace GalleryApp
                 di.Attributes |= FileAttributes.Hidden;
             }
             updateTreeViewNodes();
-            searchForNewPhotos();       
+            searchForNewPhotos();
+            //cbOrderBy.SelectedItem = cbOrderBy.Items[0];            
         }
 
         public void searchForNewPhotos()
@@ -67,12 +69,7 @@ namespace GalleryApp
                 }
             }
         }
-
-        private void bChargeDB_Click(object sender, EventArgs e)
-        {
-            updateTreeViewNodes();
-        }
-
+        
         /// <summary>
         /// Updates the MainWindow's TreeView with data from DB
         /// </summary>
@@ -152,6 +149,25 @@ namespace GalleryApp
             }
         }
 
+        private List<Photos> orderPhotoList(List<Photos> files)
+        {
+            if (cbOrderBy.SelectedItem == cbOrderBy.Items[0])
+                files.Sort((x, y) => string.Compare(x.Name, y.Name));
+            else if (cbOrderBy.SelectedItem == cbOrderBy.Items[1])
+            {
+                files.Sort((x, y) => string.Compare(x.Name, y.Name));
+                files.Reverse();
+            }
+            else if (cbOrderBy.SelectedItem == cbOrderBy.Items[2])
+                files.Sort((x, y) => DateTime.Compare(x.GetDate(), y.GetDate()));
+            else if (cbOrderBy.SelectedItem == cbOrderBy.Items[3])
+            {
+                files.Sort((x, y) => DateTime.Compare(x.GetDate(), y.GetDate()));
+                files.Reverse();
+            }
+            return files;
+        }
+
         /// <summary>
         /// Displays all images in ListView from TreeView selected folder
         /// </summary>
@@ -159,8 +175,9 @@ namespace GalleryApp
         {
             imageList.Images.Clear();
             lvImages.Clear();
-            List<Photos> files = new List<Photos>();
+            List<Photos> files = new List<Photos>();            
             files = SQLRequests.selectImagesFromFolder(tvFolders.SelectedNode.Text, Int32.Parse(tvFolders.SelectedNode.Parent.Text));
+            orderPhotoList(files);
             Size s = new Size(100, 75);
             byte[] bytes = { };
             MemoryStream ms;
@@ -212,9 +229,23 @@ namespace GalleryApp
 
                     bytes = File.ReadAllBytes(path);
                     ms = new MemoryStream(bytes);
-                    Bitmap img = new Bitmap(Image.FromStream(ms), s);
+                    Bitmap img = new Bitmap(Image.FromStream(ms));
+                    double ratioWH = img.Size.Width / (double)img.Size.Height;
+                    Bitmap png = new Bitmap(100, 75);
+                    if (ratioWH >= 1)
+                    {
+                        img = new Bitmap(img, 100, (int)(100 / ratioWH));
+                        using (Graphics G = Graphics.FromImage(png))
+                            G.DrawImage(img, 0, png.Height / 2 - img.Height / 2);
+                    }
+                    else
+                    {
+                        img = new Bitmap(img, (int)(75 * ratioWH), 75);
+                        using (Graphics G = Graphics.FromImage(png))
+                            G.DrawImage(img, png.Width / 2 - img.Width / 2, 0);
+                    }
 
-                    Icon ic = Icon.FromHandle(img.GetHicon());
+                    Icon ic = Icon.FromHandle(png.GetHicon());
 
                     imageList.Images.Add(ic);
                     lvImages.Items.Add(fileInfo.Name, indPhoto);
@@ -313,6 +344,30 @@ namespace GalleryApp
             {
                 MessageBox.Show("Please select a valid folder");
             }
+        }
+
+        private void cbOrderBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.imageList.Images.Count > 0)
+            {
+                if (!bgw1.IsBusy)
+                {
+                    bgw1 = new BackgroundWorker();
+                    bgw1.DoWork += new DoWorkEventHandler(bgw1_DoWork);
+                    bgw1.ProgressChanged += new ProgressChangedEventHandler(bgw1_ProgressChanged);
+                    bgw1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgw1_RunWorkerCompleted);
+                    bgw1.WorkerReportsProgress = true;
+
+                    progressDialog = new ProgressDialog();
+                    progressDialog.Show();
+                    progressDialog.TopMost = true;
+
+                    bgw1.RunWorkerAsync();
+                    bgw1.Dispose();
+                }
+            }
+                //displayImages();            
+            this.ActiveControl = lvImages;
         }
     }
 }

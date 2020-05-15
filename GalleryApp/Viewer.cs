@@ -216,7 +216,7 @@ namespace GalleryApp
 
         private void nextPhoto()
         {
-            if (BrightnessPercent != 0 || SaturationPercent != 0 || cbAuto.Checked)
+            if (!Saved)
             {
                 DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
@@ -235,6 +235,10 @@ namespace GalleryApp
                     SaturationPercent = 0;
                     updateSaturationValueLabel();
                     updateBrightlessValueLabel();
+                    tbWidth.Text = "Width";
+                    tbHeight.Text = "Height";
+                    cbAuto.Checked = false;
+                    Saved = true;
                 }
             }
             else
@@ -253,12 +257,15 @@ namespace GalleryApp
                 SaturationPercent = 0;
                 updateSaturationValueLabel();
                 updateBrightlessValueLabel();
+                tbWidth.Text = "Width";
+                tbHeight.Text = "Height";
+                cbAuto.Checked = false;
             }
         }
 
         private void previousPhoto()
         {
-            if (BrightnessPercent != 0 || SaturationPercent != 0 || cbAuto.Checked)
+            if (!Saved)
             {
                 DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
@@ -277,6 +284,10 @@ namespace GalleryApp
                     SaturationPercent = 0;
                     updateSaturationValueLabel();
                     updateBrightlessValueLabel();
+                    tbWidth.Text = "Width";
+                    tbHeight.Text = "Height";
+                    cbAuto.Checked = false;
+                    Saved = true;
                 }
             }
             else
@@ -295,6 +306,9 @@ namespace GalleryApp
                 SaturationPercent = 0;
                 updateSaturationValueLabel();
                 updateBrightlessValueLabel();
+                tbWidth.Text = "Width";
+                tbHeight.Text = "Height";
+                cbAuto.Checked = false;
             }
         }
 
@@ -334,7 +348,7 @@ namespace GalleryApp
         private Bitmap HistEq()
         {
             this.Cursor = Cursors.WaitCursor;
-            Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+            Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(imb.Image));
             inputImage._EqualizeHist();
             this.Cursor = Cursors.Default;
             Saved = false;
@@ -412,12 +426,13 @@ namespace GalleryApp
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
-                    imb.Image = inputImage.Bitmap;
-                }
+                Image<Rgb, Byte> inputImage = new Image<Rgb, byte>(new Bitmap(photo.FullPath));
+                imb.Image = inputImage.Bitmap;
+                BrightnessPercent = 0;
+                SaturationPercent = 0;
+                updateSaturationValueLabel();
+                updateBrightlessValueLabel();
+                Saved = true;
             }
             this.ActiveControl = imb;
         }
@@ -472,13 +487,13 @@ namespace GalleryApp
 
         private void makeMenuTransparent()
         {
-            tableLayoutPanel2.Visible = false;
+            tlpMenu.Visible = false;
             this.ActiveControl = imb;
         }
 
         private void makeMenuVisible()
         {
-            tableLayoutPanel2.Visible = true;
+            tlpMenu.Visible = true;
             this.ActiveControl = imb;
         }
 
@@ -530,6 +545,7 @@ namespace GalleryApp
             {
                 MessageBox.Show("No changes, no need to save");
             }
+            this.ActiveControl = imb;
         }
 
         private ImageCodecInfo GetEncoder(ImageFormat format)
@@ -557,12 +573,118 @@ namespace GalleryApp
 
         private void bRotateLeft_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not implemented yet");
+            Image<Rgb, byte> img = new Image<Rgb, byte>(new Bitmap(imb.Image));
+            Image <Rgb, byte>imRot =  img.Rotate(-90, new Rgb(0,0,0), false);
+            imb.Image = imRot.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
         }
 
         private void bRotateRight_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not implemented yet");
+            Image<Rgb, byte> img = new Image<Rgb, byte>(new Bitmap(imb.Image));
+            Image<Rgb, byte> imRot = img.Rotate(90, new Rgb(0, 0, 0), false);
+            imb.Image = imRot.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+        }
+
+        private void bHorizontalFlip_Click(object sender, EventArgs e)
+        {
+            Image<Rgb, byte> img = new Image<Rgb, byte>(new Bitmap(imb.Image));
+            Image<Rgb, byte> imRot = img.Flip(Emgu.CV.CvEnum.FlipType.Horizontal);
+            imb.Image = imRot.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+        }
+
+        private void bVerticalFlip_Click(object sender, EventArgs e)
+        {
+            Image<Rgb, byte> img = new Image<Rgb, byte>(new Bitmap(imb.Image));
+            Image<Rgb, byte> imRot = img.Flip(Emgu.CV.CvEnum.FlipType.Vertical);
+            imb.Image = imRot.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+        }
+
+        private void bResizeOK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int width = Int32.Parse(tbWidth.Text);
+                int height = Int32.Parse(tbHeight.Text);
+                Image<Rgb, byte> img = new Image<Rgb, byte>(new Bitmap(imb.Image));
+                Image<Rgb, byte> imgResized = img.Resize(width, height, Emgu.CV.CvEnum.Inter.Linear);
+                imb.Image = imgResized.Bitmap;
+                Saved = false;
+                imb.ZoomIn(true);
+                imb.ZoomToFit();
+                tbWidth.Text = "";
+                tbHeight.Text = "";
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show("Please specify integers.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void bGray_Click(object sender, EventArgs e)
+        {
+            Image<Gray, byte> img = new Image<Gray, byte>(new Bitmap(imb.Image));
+            imb.Image = img.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+        }
+
+        private void bBackWhite_Click(object sender, EventArgs e)
+        {
+            Image<Gray, byte> img = new Image<Gray, byte>(new Bitmap(imb.Image));
+            MCvScalar sum = CvInvoke.Sum(img);
+            double average = sum.V0 / (img.Width * img.Height);
+            img = img.ThresholdBinary(new Gray((int)average), new Gray(255));
+            imb.Image = img.Bitmap;
+            Saved = false;
+            imb.ZoomIn(true);
+            imb.ZoomToFit();
+        }
+
+        private void bReset_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("All changes will be lost. Do you want to continue ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Yes)
+            {
+                setPictureBoxImage();
+                BrightnessPercent = 0;
+                SaturationPercent = 0;
+                updateSaturationValueLabel();
+                updateBrightlessValueLabel();
+                tbWidth.Text = "";
+                tbHeight.Text = "";
+                cbAuto.Checked = false;
+                Saved = true;
+                this.ActiveControl = imb;
+            }
+        }
+
+        private void tbWidth_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (tbWidth.Text.Equals("Width"))
+            {
+                tbWidth.Text = "";
+            }
+        }
+
+        private void tbHeight_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (tbHeight.Text.Equals("Height"))
+            {
+                tbHeight.Text = "";
+            }
         }
     }
 }

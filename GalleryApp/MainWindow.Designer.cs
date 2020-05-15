@@ -32,13 +32,16 @@
             this.lvImages = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.bChargeDB = new System.Windows.Forms.Button();
             this.tvFolders = new System.Windows.Forms.TreeView();
             this.bDeleteAlbum = new System.Windows.Forms.Button();
             this.bNewAlbum = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.lbOrderBy = new System.Windows.Forms.Label();
+            this.cbOrderBy = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvImages
@@ -51,6 +54,7 @@
             this.lvImages.Name = "lvImages";
             this.lvImages.Size = new System.Drawing.Size(1516, 1027);
             this.lvImages.TabIndex = 1;
+            this.lvImages.TabStop = false;
             this.lvImages.UseCompatibleStateImageBehavior = false;
             this.lvImages.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
@@ -66,10 +70,10 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.bChargeDB, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tvFolders, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.bDeleteAlbum, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.bNewAlbum, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.bNewAlbum, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.bDeleteAlbum, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -81,17 +85,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(374, 1027);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // bChargeDB
-            // 
-            this.bChargeDB.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bChargeDB.Location = new System.Drawing.Point(117, 8);
-            this.bChargeDB.Name = "bChargeDB";
-            this.bChargeDB.Size = new System.Drawing.Size(140, 35);
-            this.bChargeDB.TabIndex = 0;
-            this.bChargeDB.Text = "Charge DB";
-            this.bChargeDB.UseVisualStyleBackColor = true;
-            this.bChargeDB.Click += new System.EventHandler(this.bChargeDB_Click);
-            // 
             // tvFolders
             // 
             this.tvFolders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
@@ -101,15 +94,19 @@
             this.tvFolders.Name = "tvFolders";
             this.tvFolders.Size = new System.Drawing.Size(368, 868);
             this.tvFolders.TabIndex = 2;
+            this.tvFolders.TabStop = false;
             this.tvFolders.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeView1_MouseDoubleClick);
             // 
             // bDeleteAlbum
             // 
             this.bDeleteAlbum.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bDeleteAlbum.Location = new System.Drawing.Point(117, 110);
+            this.bDeleteAlbum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bDeleteAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bDeleteAlbum.ForeColor = System.Drawing.SystemColors.Control;
+            this.bDeleteAlbum.Location = new System.Drawing.Point(117, 59);
             this.bDeleteAlbum.Name = "bDeleteAlbum";
             this.bDeleteAlbum.Size = new System.Drawing.Size(140, 35);
-            this.bDeleteAlbum.TabIndex = 3;
+            this.bDeleteAlbum.TabIndex = 1;
             this.bDeleteAlbum.Text = "Delete Album";
             this.bDeleteAlbum.UseVisualStyleBackColor = true;
             this.bDeleteAlbum.Click += new System.EventHandler(this.bDeleteAlbum_Click);
@@ -117,10 +114,13 @@
             // bNewAlbum
             // 
             this.bNewAlbum.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bNewAlbum.Location = new System.Drawing.Point(117, 59);
+            this.bNewAlbum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bNewAlbum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bNewAlbum.ForeColor = System.Drawing.SystemColors.Control;
+            this.bNewAlbum.Location = new System.Drawing.Point(117, 8);
             this.bNewAlbum.Name = "bNewAlbum";
             this.bNewAlbum.Size = new System.Drawing.Size(140, 35);
-            this.bNewAlbum.TabIndex = 1;
+            this.bNewAlbum.TabIndex = 0;
             this.bNewAlbum.Text = "New Album";
             this.bNewAlbum.UseVisualStyleBackColor = true;
             this.bNewAlbum.Click += new System.EventHandler(this.bNewAlbum_Click);
@@ -140,6 +140,55 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1902, 1033);
             this.tableLayoutPanel4.TabIndex = 2;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel2.Controls.Add(this.cbOrderBy, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.lbOrderBy, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 105);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(368, 45);
+            this.tableLayoutPanel2.TabIndex = 4;
+            // 
+            // lbOrderBy
+            // 
+            this.lbOrderBy.AutoSize = true;
+            this.lbOrderBy.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lbOrderBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbOrderBy.ForeColor = System.Drawing.SystemColors.Control;
+            this.lbOrderBy.Location = new System.Drawing.Point(32, 0);
+            this.lbOrderBy.Name = "lbOrderBy";
+            this.lbOrderBy.Size = new System.Drawing.Size(87, 45);
+            this.lbOrderBy.TabIndex = 6;
+            this.lbOrderBy.Text = "Order By :";
+            this.lbOrderBy.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cbOrderBy
+            // 
+            this.cbOrderBy.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cbOrderBy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
+            this.cbOrderBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOrderBy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbOrderBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbOrderBy.ForeColor = System.Drawing.SystemColors.Control;
+            this.cbOrderBy.FormattingEnabled = true;
+            this.cbOrderBy.Items.AddRange(new object[] {
+            "Name ascending order",
+            "Name descending order",
+            "Date ascending order",
+            "Date descending order"});
+            this.cbOrderBy.Location = new System.Drawing.Point(125, 10);
+            this.cbOrderBy.Name = "cbOrderBy";
+            this.cbOrderBy.Size = new System.Drawing.Size(204, 26);
+            this.cbOrderBy.TabIndex = 5;
+            this.cbOrderBy.TabStop = false;
+            this.cbOrderBy.SelectedIndexChanged += new System.EventHandler(this.cbOrderBy_SelectedIndexChanged);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -157,6 +206,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -165,12 +216,14 @@
 
         private System.Windows.Forms.ListView lvImages;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button bChargeDB;
         private System.Windows.Forms.Button bNewAlbum;
         private System.Windows.Forms.TreeView tvFolders;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.Button bDeleteAlbum;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ComboBox cbOrderBy;
+        private System.Windows.Forms.Label lbOrderBy;
     }
 }
 

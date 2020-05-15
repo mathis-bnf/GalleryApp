@@ -9,7 +9,6 @@ namespace GalleryApp
     public partial class ImagesProperties : Form
     {
         private Photos photo;
-        private Image image;
 
         internal Photos Photo
         {
@@ -23,20 +22,7 @@ namespace GalleryApp
                 photo = value;
             }
         }
-
-        public Image Image
-        {
-            get
-            {
-                return image;
-            }
-
-            set
-            {
-                image = value;
-            }
-        }
-
+        
         public ImagesProperties()
         {
             InitializeComponent();
@@ -47,24 +33,27 @@ namespace GalleryApp
         /// </summary>
         public void initialization()
         {
-            Image = System.Drawing.Image.FromFile(photo.FullPath);
-            lbFilename.Text = photo.Name;
-            try
+            using (FileStream fs = new FileStream(Photo.FullPath, FileMode.Open, FileAccess.Read))
+            using (Image image = Image.FromStream(fs, false, false))
             {
-                // Prise de vue : 0x0132 
-                lbDate.Text = Encoding.UTF8.GetString(Image.GetPropertyItem(0x0132).Value);
-            }
-            catch (ArgumentException e)
-            {
-                lbDate.Text = File.GetCreationTime(photo.FullPath).ToString() ;
-            }
-            lbDimensions.Text = Image.Width + "x" + Image.Height;
-            Folder folder = SQLRequests.selectParentFolder(photo);
+                lbFilename.Text = photo.Name;
+                try
+                {
+                    // Prise de vue : 0x0132 
+                    lbDate.Text = Encoding.UTF8.GetString(image.GetPropertyItem(0x0132).Value);
+                }
+                catch (ArgumentException e)
+                {
+                    lbDate.Text = File.GetCreationTime(photo.FullPath).ToString();
+                }
+                lbDimensions.Text = image.Width + "x" + image.Height;
+                Folder folder = SQLRequests.selectParentFolder(photo);
 
-            FileInfo fi = new FileInfo(photo.FullPath);
-            lbSize.Text = Math.Round(fi.Length/1048576.0, 2).ToString()+" MB";
-            lbPlace.Text = folder.Place;
-            this.Show();
+                FileInfo fi = new FileInfo(photo.FullPath);
+                lbSize.Text = Math.Round(fi.Length / 1048576.0, 2).ToString() + " MB";
+                lbPlace.Text = folder.Place;
+                this.Show();
+            }
         }
     }
 }

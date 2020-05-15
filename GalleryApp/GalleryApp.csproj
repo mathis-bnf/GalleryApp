@@ -186,6 +186,33 @@
   <ItemGroup>
     <None Include="Resources\rotateRight.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flipVertical1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\flipHorizontal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightArrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftArrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightArrow1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftArrow1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightArrow22.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightArrow2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftArrow2.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
